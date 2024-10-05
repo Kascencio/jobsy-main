@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -7,6 +8,7 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -19,10 +21,11 @@
         "name": "next"
       }
     ],
-    "paths": {
+   "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["next-auth"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/**/*"],
   "exclude": ["node_modules"]
 }

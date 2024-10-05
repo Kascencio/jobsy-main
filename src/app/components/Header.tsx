@@ -1,13 +1,16 @@
-"use client";
+// src/components/Header.tsx
+
+'use client';
 
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import Style from "./componets.module.css";
 
 export default function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="bg-blue-600 text-white p-4 flex justify-between">
+    <header className={Style.header}>
       <Link href="/">
         <span className="text-xl font-bold">Jobsy</span>
       </Link>
