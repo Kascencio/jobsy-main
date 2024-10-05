@@ -1,0 +1,192 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model categoria {
+  cat_id     Int      @id @default(autoincrement())
+  cat_nombre String   @db.VarChar(100)
+  empleos    empleo[]
+}
+
+model educacion {
+  edu_id           Int       @id @default(autoincrement())
+  edu_usuario_id   Int
+  edu_institucion  String    @db.VarChar(255)
+  edu_titulo       String    @db.VarChar(255)
+  edu_fecha_inicio DateTime  @db.Date
+  edu_fecha_fin    DateTime? @db.Date
+  usuario          usuario   @relation(fields: [edu_usuario_id], references: [usu_id], onDelete: Cascade)
+
+  @@index([edu_usuario_id])
+}
+
+model empleo {
+  emp_id                Int               @id @default(autoincrement())
+  emp_titulo            String            @db.VarChar(255)
+  emp_descripcion       String?           @db.Text
+  emp_empresa_id        Int
+  emp_categoria_id      Int
+  emp_fecha_publicacion DateTime          @db.Date
+  emp_salario_min       Decimal?          @db.Decimal(10, 2)
+  emp_salario_max       Decimal?          @db.Decimal(10, 2)
+  emp_tipo_contrato     String?           @db.VarChar(100)
+  emp_requisitos        String?           @db.Text
+  emp_beneficios        String?           @db.Text
+  emp_num_vacantes      Int?              @default(1)
+  empresa               empresa           @relation(fields: [emp_empresa_id], references: [emp_id], onDelete: Cascade)
+  categoria             categoria         @relation(fields: [emp_categoria_id], references: [cat_id], onDelete: Cascade)
+  favoritos             favorito[]
+  postulaciones         postulacion[]
+  empleo_habilidades    empleo_habilidad[]
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @updatedAt
+
+  @@index([emp_categoria_id])
+  @@index([emp_empresa_id])
+}
+
+model empresa {
+  emp_id       Int       @id @default(autoincrement())
+  emp_nombre   String    @db.VarChar(255)
+  emp_sector   String    @db.VarChar(100)
+  emp_usuarios usuario[] // Reclutadores asociados a la empresa
+  empleos      empleo[]
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+}
+
+model experiencia {
+  exp_id           Int       @id @default(autoincrement())
+  exp_usuario_id   Int
+  exp_puesto       String    @db.VarChar(255)
+  exp_empresa      String    @db.VarChar(255)
+  exp_fecha_inicio DateTime  @db.Date
+  exp_fecha_fin    DateTime? @db.Date
+  exp_descripcion  String?   @db.Text
+  usuario          usuario   @relation(fields: [exp_usuario_id], references: [usu_id], onDelete: Cascade)
+
+  @@index([exp_usuario_id])
+}
+
+model favorito {
+  fav_id         Int     @id @default(autoincrement())
+  fav_usuario_id Int
+  fav_empleo_id  Int
+  usuario        usuario @relation(fields: [fav_usuario_id], references: [usu_id], onDelete: Cascade)
+  empleo         empleo  @relation(fields: [fav_empleo_id], references: [emp_id], onDelete: Cascade)
+
+  @@index([fav_empleo_id])
+  @@index([fav_usuario_id])
+}
+
+model postulacion {
+  pos_id                Int      @id @default(autoincrement())
+  pos_usuario_id        Int
+  pos_empleo_id         Int
+  pos_fecha_postulacion DateTime @db.Date
+  pos_estado            String   @default("Enviada") @db.VarChar(50)
+  empleo                empleo   @relation(fields: [pos_empleo_id], references: [emp_id], onDelete: Cascade)
+  usuario               usuario  @relation(fields: [pos_usuario_id], references: [usu_id], onDelete: Cascade)
+
+  @@index([pos_empleo_id])
+  @@index([pos_usuario_id])
+}
+
+model usuario {
+  usu_id               Int                @id @default(autoincrement())
+  usu_nombre           String             @db.VarChar(255)
+  usu_apellido         String?            @db.VarChar(255)
+  usu_email            String             @unique @db.VarChar(255)
+  usu_password         String             @db.VarChar(255)
+  usu_rol              String             @default("candidato") @db.VarChar(50)
+  usu_telefono         String?            @db.VarChar(20)
+  usu_direccion        String?            @db.VarChar(255)
+  usu_foto             String?            @db.VarChar(255)
+  usu_resumen          String?            @db.Text
+  empresa_id           Int?
+  empresa              empresa?           @relation(fields: [empresa_id], references: [emp_id], onDelete: Cascade)
+  educaciones          educacion[]
+  experiencias         experiencia[]
+  favoritos            favorito[]
+  postulaciones        postulacion[]
+  usuario_habilidades  usuario_habilidad[]
+  created_at           DateTime           @default(now())
+  updated_at           DateTime           @updatedAt
+
+  @@index([empresa_id])
+}
+
+model habilidad {
+  hab_id              Int                 @id @default(autoincrement())
+  hab_nombre          String              @db.VarChar(100)
+  usuario_habilidades usuario_habilidad[]
+  empleo_habilidades  empleo_habilidad[]
+}
+
+model usuario_habilidad {
+  usuario_id   Int
+  habilidad_id Int
+  usuario      usuario   @relation(fields: [usuario_id], references: [usu_id], onDelete: Cascade)
+  habilidad    habilidad @relation(fields: [habilidad_id], references: [hab_id], onDelete: Cascade)
+
+  @@id([usuario_id, habilidad_id])
+}
+
+model empleo_habilidad {
+  empleo_id    Int
+  habilidad_id Int
+  empleo       empleo     @relation(fields: [empleo_id], references: [emp_id], onDelete: Cascade)
+  habilidad    habilidad  @relation(fields: [habilidad_id], references: [hab_id], onDelete: Cascade)
+
+  @@id([empleo_id, habilidad_id])
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  userId             Int
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?    @db.Text
+  access_token       String?    @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?    @db.Text
+  session_state      String?
+
+  usuario            usuario   @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
+
+  @@map("accounts")
+}
+
+model Session {
+  id           Int       @id @default(autoincrement())
+  sessionToken String    @unique
+  userId       Int
+  expires      DateTime
+
+  usuario      usuario   @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id         Int       @id @default(autoincrement())
+  identifier String
+  token      String    @unique
+  expires    DateTime
+
+  @@map("verification_tokens")
+}
