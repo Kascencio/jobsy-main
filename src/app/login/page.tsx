@@ -2,10 +2,10 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Style  from './login.module.css';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import Link from 'next/link';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const { data: session } = useSession();
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,11 +29,19 @@ export default function Login() {
     });
 
     if (res?.ok) {
-      router.push('/');
+      // Redirigir al usuario al dashboard
+      router.push('/dashboard');
     } else {
       alert('Error al iniciar sesión');
     }
   };
+
+  // Opcional: Si el usuario ya está autenticado, redirigirlo
+  useEffect(() => {
+    if (session) {
+      router.push('/dashboard');
+    }
+  }, [session, router]);
 
   return (
     <>
