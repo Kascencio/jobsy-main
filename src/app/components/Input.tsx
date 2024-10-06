@@ -1,5 +1,5 @@
 // src/components/Input.tsx
-
+import Style from './componets.module.css'
 interface InputProps {
     label: string;
     type: string;
@@ -11,10 +11,10 @@ interface InputProps {
   
   export default function Input({ label, type, name, value, onChange, required = false }: InputProps) {
     return (
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-1">{label}</label>
+      <div className={Style.container_inputs}>
+        <label className={Style.label}>{label}</label>
         <input
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+          className={Style.input}
           type={type}
           name={name}
           value={value}

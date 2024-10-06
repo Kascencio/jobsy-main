@@ -1,5 +1,5 @@
 // src/components/Button.tsx
-
+import Style from './componets.module.css'
 interface ButtonProps {
     label: string;
     onClick?: () => void;
@@ -7,10 +7,10 @@ interface ButtonProps {
     className?: string;
   }
   
-  export default function Button({ label, onClick, type = 'button', className }: ButtonProps) {
+  export default function Button({ label, onClick, type = 'button' }: ButtonProps) {
     return (
       <button
-        className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors ${className}`}
+        className={Style.button}
         onClick={onClick}
         type={type}
       >

@@ -1,21 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 .header{
-    width: 100%;
-    height: 10vh;
-    background-color: rgb(211, 211, 211);
+    width: 46vh;
+    height: auto;
+    background-color: #ffffff;
     display: flex;
-    justify-content: space-around;
     flex-direction: row;
     align-items: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 1rem;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 0rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(192, 192, 192);
 }
 
 .header nav{
-    padding: 10vh;
+    font-size: 1rem;
 }
 
 .header span{
-    color: rgb(26, 66, 244);
+    color: #1e2f5b;
     padding: 2vh;
+    text-align: center;
+}
 
+.img_container{
+    width:30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_container{
+    width: 100%;
+    height: 10vh;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_inputs{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.label{
+    font-size: 1.1rem;
+    margin-bottom: 2vh;
+    margin-top: 3vh;
+}
+
+.input{
+    width: 20vh;
+    background-color: #ffffff;
+    border-radius: 2px;
+    height: 3vh;
+}
+
+.button{
+    width: 21vh;
+    height: 5vh;
+    margin-top: 3vh;
+    font-size: 1rem;
+    background-color: #069DFF;
+    border-radius: 2px;
+    border-style: 1px groove #069DFF;
+    color: #ffffff;
+}
+
+
+
+  @media screen and (min-width: 900px) {
+    .header {
+        width: 100%;
+        height: 20vh;
+        flex-direction: row;
+        font-size: 1.2rem;
+        justify-content: space-evenly;
+    }
+
+    .header nav {
+        flex-direction: row;
+        width: auto;
+    }
+
+    .header span {
+        padding: 2vh;
+    }
+
+    .img_container {
+        width: 17%;
+        margin-bottom: 0;
+    }
+
+    .footer_container {
+        height: 10vh;
+    }
 }

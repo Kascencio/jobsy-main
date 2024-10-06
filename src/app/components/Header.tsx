@@ -5,15 +5,23 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import Style from "./componets.module.css";
+import Image from 'next/image';
+import Logo from 'public/images/Logo-jobsy-.png';
 
 export default function Header() {
   const { data: session } = useSession();
 
   return (
     <header className={Style.header}>
-      <Link href="/">
-        <span className="text-xl font-bold">Jobsy</span>
-      </Link>
+      <div className={Style.img_container}>
+        <Link href="/">
+      <Image src={Logo} sizes="60vh" alt='Logo' style={{
+          width: '90%',
+          height: 'auto',
+          borderRadius:  '.7vh',
+        }}></Image></Link>
+        <h1>Jobsy</h1>
+      </div>
       <nav>
         {session ? (
           <>
