@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import Style  from './login.module.css';
 import Link from 'next/link';
 
-
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const { data: session } = useSession();
@@ -27,21 +26,18 @@ export default function Login() {
       password: form.password,
       redirect: false,
     });
-
     if (res?.ok) {
-      // Redirigir al usuario al dashboard
       router.push('/dashboard');
     } else {
       alert('Error al iniciar sesión');
     }
   };
-
-  // Opcional: Si el usuario ya está autenticado, redirigirlo
   useEffect(() => {
     if (session) {
       router.push('/dashboard');
     }
   }, [session, router]);
+
 
   return (
     <>
@@ -50,7 +46,7 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <Input label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
         <Input label="Contraseña" type="password" name="password" onChange={handleChange} required />
-        <Button label="Iniciar Sesión" type="submit" className="w-full" />
+        <Button label="Iniciar Sesión" type="submit" className="Button" />
       </form>
       </div>
       <div className={Style.container_register}>

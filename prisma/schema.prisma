@@ -32,25 +32,25 @@ model educacion {
 }
 
 model empleo {
-  emp_id                Int               @id @default(autoincrement())
-  emp_titulo            String            @db.VarChar(255)
-  emp_descripcion       String?           @db.Text
+  emp_id                Int                @id @default(autoincrement())
+  emp_titulo            String             @db.VarChar(255)
+  emp_descripcion       String?            @db.Text
   emp_empresa_id        Int
   emp_categoria_id      Int
-  emp_fecha_publicacion DateTime          @db.Date
-  emp_salario_min       Decimal?          @db.Decimal(10, 2)
-  emp_salario_max       Decimal?          @db.Decimal(10, 2)
-  emp_tipo_contrato     String?           @db.VarChar(100)
-  emp_requisitos        String?           @db.Text
-  emp_beneficios        String?           @db.Text
-  emp_num_vacantes      Int?              @default(1)
-  empresa               empresa           @relation(fields: [emp_empresa_id], references: [emp_id], onDelete: Cascade)
-  categoria             categoria         @relation(fields: [emp_categoria_id], references: [cat_id], onDelete: Cascade)
+  emp_fecha_publicacion DateTime           @db.Date
+  emp_salario_min       Decimal?           @db.Decimal(10, 2)
+  emp_salario_max       Decimal?           @db.Decimal(10, 2)
+  emp_tipo_contrato     String?            @db.VarChar(100)
+  emp_requisitos        String?            @db.Text
+  emp_beneficios        String?            @db.Text
+  emp_num_vacantes      Int?               @default(1)
+  empresa               empresa            @relation(fields: [emp_empresa_id], references: [emp_id], onDelete: Cascade)
+  categoria             categoria          @relation(fields: [emp_categoria_id], references: [cat_id], onDelete: Cascade)
   favoritos             favorito[]
   postulaciones         postulacion[]
   empleo_habilidades    empleo_habilidad[]
-  created_at            DateTime          @default(now())
-  updated_at            DateTime          @updatedAt
+  created_at            DateTime           @default(now())
+  updated_at            DateTime           @updatedAt
 
   @@index([emp_categoria_id])
   @@index([emp_empresa_id])
@@ -104,25 +104,27 @@ model postulacion {
 }
 
 model usuario {
-  usu_id               Int                @id @default(autoincrement())
-  usu_nombre           String             @db.VarChar(255)
-  usu_apellido         String?            @db.VarChar(255)
-  usu_email            String             @unique @db.VarChar(255)
-  usu_password         String             @db.VarChar(255)
-  usu_rol              String             @default("candidato") @db.VarChar(50)
-  usu_telefono         String?            @db.VarChar(20)
-  usu_direccion        String?            @db.VarChar(255)
-  usu_foto             String?            @db.VarChar(255)
-  usu_resumen          String?            @db.Text
-  empresa_id           Int?
-  empresa              empresa?           @relation(fields: [empresa_id], references: [emp_id], onDelete: Cascade)
-  educaciones          educacion[]
-  experiencias         experiencia[]
-  favoritos            favorito[]
-  postulaciones        postulacion[]
-  usuario_habilidades  usuario_habilidad[]
-  created_at           DateTime           @default(now())
-  updated_at           DateTime           @updatedAt
+  usu_id              Int                 @id @default(autoincrement())
+  usu_nombre          String              @db.VarChar(100)
+  usu_apellido        String?             @db.VarChar(100)
+  usu_email           String              @unique @db.VarChar(255)
+  usu_password        String              @db.VarChar(255)
+  usu_rol             String              @default("candidato") @db.VarChar(50)
+  usu_telefono        String?             @db.VarChar(20)
+  usu_direccion       String?             @db.VarChar(255)
+  usu_foto            String?             @db.VarChar(255)
+  usu_resumen         String?             @db.Text
+  empresa_id          Int?
+  empresa             empresa?            @relation(fields: [empresa_id], references: [emp_id], onDelete: Cascade)
+  educaciones         educacion[]
+  experiencias        experiencia[]
+  favoritos           favorito[]
+  postulaciones       postulacion[]
+  usuario_habilidades usuario_habilidad[]
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  accounts            Account[]
+  sessions            Session[]
 
   @@index([empresa_id])
 }
@@ -146,46 +148,44 @@ model usuario_habilidad {
 model empleo_habilidad {
   empleo_id    Int
   habilidad_id Int
-  empleo       empleo     @relation(fields: [empleo_id], references: [emp_id], onDelete: Cascade)
-  habilidad    habilidad  @relation(fields: [habilidad_id], references: [hab_id], onDelete: Cascade)
+  empleo       empleo    @relation(fields: [empleo_id], references: [emp_id], onDelete: Cascade)
+  habilidad    habilidad @relation(fields: [habilidad_id], references: [hab_id], onDelete: Cascade)
 
   @@id([empleo_id, habilidad_id])
 }
 
 model Account {
-  id                 Int       @id @default(autoincrement())
-  userId             Int
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?    @db.Text
-  access_token       String?    @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?    @db.Text
-  session_state      String?
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-  usuario            usuario   @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
+  usuario usuario @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
 
-  @@map("accounts")
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  sessionToken String    @unique
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
   userId       Int
   expires      DateTime
 
-  usuario      usuario   @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
-
-  @@map("sessions")
+  usuario usuario @relation(fields: [userId], references: [usu_id], onDelete: Cascade)
 }
 
 model VerificationToken {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   identifier String
-  token      String    @unique
+  token      String   @unique
   expires    DateTime
 
   @@map("verification_tokens")

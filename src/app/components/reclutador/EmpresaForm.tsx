@@ -35,6 +35,9 @@ export default function EmpresaForm() {
     // Enviar los datos de la empresa a la API
     const res = await fetch('/api/reclutador/empresa', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(form),
     });
 

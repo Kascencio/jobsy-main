@@ -21,7 +21,6 @@ export async function GET() {
   return NextResponse.json(empleos);
 }
 
-
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 
@@ -50,7 +49,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(empleo);
   } catch (error) {
-    console.log(error);
+    console.log(error)
     return NextResponse.json({ error: 'Error al crear el empleo' }, { status: 500 });
   }
 }

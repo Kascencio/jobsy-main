@@ -60,6 +60,7 @@ export default function Registro() {
           >
             <option value="candidato">Candidato</option>
             <option value="reclutador">Reclutador</option>
+            <option value="administrador">Administrador</option>
           </select>
         </div>
         <Button label="Registrarse" type="submit" className="w-full" />

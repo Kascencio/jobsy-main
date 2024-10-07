@@ -25,11 +25,14 @@ export default function CrearEmpleoForm() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   useEffect(() => {
-    // Obtener las categorías desde la API
     const fetchCategorias = async () => {
       const res = await fetch('/api/categorias');
-      const data: Categoria[] = await res.json();
-      setCategorias(data);
+      if (res.ok) {
+        const data: Categoria[] = await res.json();
+        setCategorias(data);
+      } else {
+        console.error('Error fetching categories');
+      }
     };
 
     fetchCategorias();
@@ -44,6 +47,9 @@ export default function CrearEmpleoForm() {
     // Enviar los datos del empleo a la API
     const res = await fetch('/api/reclutador/empleos', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(form),
     });
 
