@@ -25,14 +25,15 @@ export default function Header() {
       <nav>
         {session ? (
           <>
+          <Link href="/dashboard"><span>Dashboard</span></Link>
             <Link href="/perfil">
               <span className="mr-4">Perfil</span>
             </Link>
-            <button onClick={() => signOut()}>Cerrar Sesión</button>
+            <button onClick={() => signOut()} className={Style.button_active} >Cerrar Sesión</button>
           </>
         ) : (
           <>
-            <Link href="/login">
+            <Link  href="/login">
               <span className="mr-4">Iniciar Sesión</span>
             </Link>
             <Link href="/registro">

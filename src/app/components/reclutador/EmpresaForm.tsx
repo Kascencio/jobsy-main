@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Style from '../componets.module.css'
 
 export default function EmpresaForm() {
   const [form, setForm] = useState({
@@ -49,12 +50,12 @@ export default function EmpresaForm() {
   };
 
   return (
-    <div className="mb-6">
-      <h2 className="text-xl font-bold mb-4">Datos de la Empresa</h2>
+    <div className={Style.container}>
+      <h2 className={Style.title}>Datos de la Empresa</h2>
       <form onSubmit={handleSubmit}>
-        <Input label="Nombre de la Empresa" type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
-        <Input label="Sector" type="text" name="sector" value={form.sector} onChange={handleChange} required />
-        <Button label="Guardar Empresa" type="submit" />
+        <Input  classname={Style.input} label="Nombre de la Empresa" type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
+        <Input classname={Style.input} label="Sector" type="text" name="sector" value={form.sector} onChange={handleChange} required />
+        <Button className={Style.button} label="Guardar Empresa" type="submit" />
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 import ProtectedRoute from '../components/ProtectedRoute';
+import Style from './perfil.module.css'
 
 export default async function Perfil() {
   const session = await getServerSession(authOptions);
@@ -18,17 +19,19 @@ export default async function Perfil() {
 
   return (
     <ProtectedRoute>
-      <div>
-        <h1 className="text-2xl font-bold mb-6">Perfil</h1>
+      <div className={Style.container}>
+        <div className={Style.card}>
+        <h1 className={Style.title}>Perfil</h1>
         <p>
-          <strong>Nombre:</strong> {user?.usu_nombre} {user?.usu_apellido}
+          <strong>Nombre:</strong> <br /><hr/>{user?.usu_nombre} {user?.usu_apellido}<hr/>
         </p>
         <p>
-          <strong>Correo:</strong> {user?.usu_email}
+          <strong>Correo:</strong> <br /><hr/>{user?.usu_email}<hr/>
         </p>
         <p>
-          <strong>Rol:</strong> {user?.usu_rol}
+          <strong>Rol:</strong><br /> <hr/>{user?.usu_rol}<hr/>
         </p>
+        </div>
         {/* Agrega más detalles del perfil según sea necesario */}
       </div>
     </ProtectedRoute>

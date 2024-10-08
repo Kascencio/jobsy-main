@@ -4,6 +4,7 @@
 
 import { format } from 'date-fns';
 import Link from 'next/link';
+import Style from './componets.module.css'
 
 interface OfertaCardProps {
   id: number;
@@ -21,9 +22,9 @@ export default function OfertaCard({
   fechaPublicacion,
 }: OfertaCardProps) {
   return (
-    
-    <div className="border p-4 mb-4 rounded hover:shadow-md transition-shadow">
-      <h2 className="text-xl font-bold mb-2">{titulo}</h2>
+    <div className={Style.container} >
+      <div className={Style.container_card} style={{marginTop:30}}>
+      <h2 className={Style.title_empleo}>{titulo}</h2>
       <p className="text-gray-700">{empresa}</p>
       {ubicacion && <p className="text-gray-600">{ubicacion}</p>}
       <p className="text-sm text-gray-500">
@@ -34,6 +35,7 @@ export default function OfertaCard({
           Ver más
         </span>
       </Link>
+      </div>
     </div>
   );
 }

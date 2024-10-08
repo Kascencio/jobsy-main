@@ -1,7 +1,78 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession, NextAuthOptions, Session, User } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/lib/prisma';
+import { compare } from 'bcryptjs';
+import { JWT } from 'next-auth/jwt';
+import { NextResponse } from 'next/server';
+
+interface CustomUser extends User {
+  role: string;
+}
+
+interface CustomSession extends Omit<Session, "user"> {
+  user?: CustomUser & {
+    id: string;
+  };
+}
+
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) return null;
+
+        const user = await prisma.usuario.findUnique({
+          where: { usu_email: credentials.email },
+        });
+
+        if (!user) return null;
+
+        const isValidPassword = await compare(credentials.password, user.usu_password);
+
+        if (!isValidPassword) return null;
+
+        return {
+          id: user.usu_id.toString(),
+          name: user.usu_nombre,
+          email: user.usu_email,
+          role: user.usu_rol,
+        };
+      },
+    }),
+  ],
+  callbacks: {
+    async session({ session, token }: { session: Session; token: JWT }): Promise<CustomSession> {
+      return {
+        ...session,
+        user: session.user ? {
+          ...session.user,
+          id: token.sub!,
+          role: token.role as string,
+        } : undefined
+      };
+    },
+    async jwt({ token, user }: { token: JWT; user?: CustomUser }): Promise<JWT> {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -49,7 +120,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(empleo);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ error: 'Error al crear el empleo' }, { status: 500 });
   }
 }

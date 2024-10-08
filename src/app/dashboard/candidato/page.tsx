@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import PerfilForm from '../../components/candidato/PerfilForm';
 import PostulacionesList from '../../components/candidato/PostulacionesList';
 import Button from '../../components/Button';
+import Style from './candidato.module.css'
 
 export default function DashboardCandidato() {
   const { data: session, status } = useSession();
@@ -40,13 +41,15 @@ export default function DashboardCandidato() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard del Candidato</h1>
-      <div className="flex space-x-4 mb-4">
-        <Button label="Mi Perfil" onClick={() => setActiveTab('perfil')} className={activeTab === 'perfil' ? 'bg-blue-700' : ''} />
-        <Button label="Mis Postulaciones" onClick={() => setActiveTab('postulaciones')} />
-        {/* Agrega más botones para otras acciones */}
+      <div className={Style.container}>
+        <h1 className={Style.title}>Dashboard del Candidato</h1>
+        <div className={Style.container_active}>
+          <Button className={Style.button} label="Mi Perfil" onClick={() => setActiveTab('perfil')} />
+          <Button className={Style.button} label="Mis Postulaciones" onClick={() => setActiveTab('postulaciones')} />
+          {/* Agrega más botones para otras acciones */}
+        </div>
+        <div>{renderContent()}</div>
       </div>
-      <div>{renderContent()}</div>
     </div>
   );
 }

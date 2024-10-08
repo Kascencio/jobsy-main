@@ -74,10 +74,97 @@
     height: 5vh;
     margin-top: 3vh;
     font-size: 1rem;
-    background-color: #069DFF;
-    border-radius: 2px;
+    background-color: blue;
+    border-radius: .5vh;
     border-style: 1px groove #069DFF;
     color: #ffffff;
+}
+
+.button_active{
+    margin-left: 1vh;
+    width: 13vh;
+    background-color: blue;
+    height: 5vh;
+    color: white;
+    border-radius: .4vh;
+    border-color: #ffffff;
+}
+
+.input_perfil{
+    width: 75%;
+    height: 4vh;
+    background-color: rgb(255, 255, 255);
+    border-radius: .5vh;
+}
+
+.container_Resumen{
+    font-family: "Inter", sans-serif;
+    padding-top: 2vh;
+    height: 8vh;
+}
+
+.title_resumen{
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.container_CrearEmpleo{
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.container_cards{
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.container{
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.container_card{
+    background-color:#d9d9d9;
+    color: rgb(0, 0, 0);
+    width: 80%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    border-radius: 41px 1px 94px 1px;
+-moz-border-radius: 41px 1px 94px 1px;
+-webkit-border-radius: 41px 1px 94px 1px;
+border: 0px solid #050505;
+-webkit-box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
+-moz-box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
+box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
+}
+
+.title_empleo{
+    color: #1500ff;
 }
 
 
@@ -123,5 +210,20 @@
     
     .button{
         width: 30vh;
+    }
+
+    .button_active{
+        margin-left: 1.2vh;
+        width: 17vh;
+    }
+
+    .container_cards{
+        flex-direction: row;
+    }
+
+    .container_card{
+        margin-left: 4vh;
+        width: 35vh;
+        flex-direction: column;
     }
 }

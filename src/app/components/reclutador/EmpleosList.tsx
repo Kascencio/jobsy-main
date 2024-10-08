@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Style from '../componets.module.css'
 
 interface Empresa {
     emp_id: number;
@@ -48,10 +49,10 @@ interface Empresa {
     }
   
     return (
-      <ul>
+      <ul className={Style.container_cards}>
         {empleos.map((empleo: Empleo) => (
-          <li key={empleo.emp_id} className="mb-4 border p-4 rounded">
-            <h3 className="text-lg font-bold">
+          <li key={empleo.emp_id} className={Style.container_card} style={{marginTop:30}}>
+            <h3 className={Style.title_empleo}>
               <Link href={`/ofertas/${empleo.emp_id}`}>{empleo.emp_titulo}</Link>
             </h3>
             <p>{empleo.emp_descripcion}</p>

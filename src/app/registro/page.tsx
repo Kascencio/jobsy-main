@@ -7,6 +7,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import Style from './registro.module.css'
 
 export default function Registro() {
   const [form, setForm] = useState({
@@ -43,27 +44,27 @@ export default function Registro() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Registro</h1>
+    <div className={Style.container_registro}>
+      <h1 className={Style.title}>Registro</h1>
       <form onSubmit={handleSubmit}>
-        <Input label="Nombre" type="text" name="nombre" onChange={handleChange} required />
-        <Input label="Apellido" type="text" name="apellido" onChange={handleChange} />
-        <Input label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
-        <Input label="Contraseña" type="password" name="password" onChange={handleChange} required />
-        <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-1">Rol</label>
+        <Input classname={Style.input} label="Nombre" type="text" name="nombre" onChange={handleChange} required />
+        <Input classname={Style.input} label="Apellido" type="text" name="apellido" onChange={handleChange} />
+        <Input classname={Style.input} label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
+        <Input classname={Style.input} label="Contraseña" type="password" name="password" onChange={handleChange} required />
+        <div className={Style.container_options}>
+          <label className={Style.label}>Rol</label>
           <select
             name="rol"
             value={form.rol}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            className={Style.select}
           >
             <option value="candidato">Candidato</option>
             <option value="reclutador">Reclutador</option>
             <option value="administrador">Administrador</option>
           </select>
         </div>
-        <Button label="Registrarse" type="submit" className="w-full" />
+        <Button label="Registrarse" type="submit" className={Style.button} />
       </form>
     </div>
   );

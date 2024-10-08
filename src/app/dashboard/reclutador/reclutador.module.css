@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.container{
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.container_ofertas{
+    width: 100%;
+    height: auto;
+    margin-top: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    background-color: rgb(245, 245, 255);
+    padding: 2vh;
+    width: 80%;
+    height: auto;
+    border-radius: 2vh;
+}

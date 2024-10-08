@@ -46,6 +46,7 @@ export default async function Home() {
       </div>
       <div className={Style.container_empleos}>
         <h1 className={Style.title} >Últimas Ofertas de Empleo</h1>
+        <div className={Style.container_cards}>
         {empleos.map((empleo) => (
           <OfertaCard
             key={empleo.emp_id}
@@ -55,6 +56,7 @@ export default async function Home() {
             fechaPublicacion={empleo.emp_fecha_publicacion.toISOString()}
           />
         ))}
+        </div>
       </div>
     </div>
   );

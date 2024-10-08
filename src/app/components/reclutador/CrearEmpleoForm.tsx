@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Style from '../componets.module.css'
 
 interface Categoria {
   cat_id: number;
@@ -73,12 +74,12 @@ export default function CrearEmpleoForm() {
   };
 
   return (
-    <div className="mb-6">
-      <h2 className="text-xl font-bold mb-4">Crear Nueva Oferta de Empleo</h2>
+    <div className={Style.container_CrearEmpleo} style={{marginTop:30}}>
+      <h2 className={Style.title}>Crear Nueva Oferta de Empleo</h2>
       <form onSubmit={handleSubmit}>
-        <Input label="Título del Empleo" type="text" name="titulo" value={form.titulo} onChange={handleChange} required />
-        <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-1">Descripción</label>
+        <Input classname={Style.input} label="Título del Empleo" type="text" name="titulo" value={form.titulo} onChange={handleChange} required />
+        <div className={Style.container} style={{marginTop:16}}>
+          <label className={Style.title}>Descripción</label>
           <textarea
             name="descripcion"
             value={form.descripcion}
@@ -88,13 +89,14 @@ export default function CrearEmpleoForm() {
             required
           ></textarea>
         </div>
-        <div className="mb-4">
+        <div className={Style.container_inputs} style={{marginTop:20}}>
           <label className="block text-gray-700 font-semibold mb-1">Categoría</label>
           <select
             name="categoria_id"
             value={form.categoria_id}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            className={Style.input}
+            style={{marginTop:10}}
             required
           >
         <option value="">Seleccione una categoría</option>
@@ -106,7 +108,7 @@ export default function CrearEmpleoForm() {
           </select>
         </div>
         {/* Otros campos como salario, tipo de contrato, etc. */}
-        <Button label="Publicar Empleo" type="submit" />
+        <Button className={Style.button} label="Publicar Empleo" type="submit" />
       </form>
     </div>
   );
