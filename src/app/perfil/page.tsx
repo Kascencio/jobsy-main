@@ -1,7 +1,7 @@
 // src/app/perfil/page.tsx
 
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/nextauth/route';
 import prisma from '@/lib/prisma';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Style from './perfil.module.css'
