@@ -3,8 +3,8 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import CategoriasList from '../../components/administrador/CategoriasList';
-import CategoriaForm from '../../components/administrador/CategoriaForm';
+import CategoriasList from '../../components/moderador/CategoriasList';
+import CategoriaForm from '../../components/moderador/CategoriaForm';
 
 export default function DashboardAdministrador() {
   const { data: session, status } = useSession();
@@ -13,7 +13,7 @@ export default function DashboardAdministrador() {
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/login');
-    } else if (session?.user.role !== 'administrador') {
+    } else if (session?.user.role !== 'moderador') {
       router.push('/');
     }
   }, [status, session, router]);

@@ -14,7 +14,7 @@ export default function CategoriasList() {
   useEffect(() => {
     // Obtener las categorías desde la API
     const fetchData = async () => {
-      const res = await fetch('/api/administrador/categorias');
+      const res = await fetch('/api/moderador/categorias');
       const data: Categoria[] = await res.json();
       setCategorias(data);
     };
@@ -23,7 +23,7 @@ export default function CategoriasList() {
   }, []);
 
   const handleDelete = async (id: number) => {
-    const res = await fetch(`/api/administrador/categorias/${id}`, {
+    const res = await fetch(`/api/moderador/categorias/${id}`, {
       method: 'DELETE',
     });
 

@@ -3,7 +3,8 @@
 import OfertaCard from './components/OfertaCard';
 import prisma from '@/lib/prisma';
 import Image from 'next/image';
-import img_person from 'public/images/Person.jpg';
+import img_person from 'public/images/Landing_Person.png';
+import img_card from  'public/images/Card_.png';
 import Style from './globals.module.css';
 import Link from 'next/link';
 
@@ -22,13 +23,32 @@ export default async function Home() {
   return (
     <div>
       <div className="landing">
+        <div className={Style.container_}>
+          <section className={Style.title}>
+          <h1>
+          Bienvenido a Jobsy
+          </h1>
+          <p>
+          <span>Conectamos talento y oportunidades:</span> una plataforma para reclutadores y candidatos en busca de su próximo gran paso.
+          </p>
+          <Link href={"/login"} className={Style.button_landing}>
+            Ingresa Gratis
+          </Link>
+          </section>
         <div className={Style.img_container}>
-          <Image src={img_person} sizes="100vh" alt='Person' style={{
-          width: '100%',
+        <Image src={img_person} id={Style.person}sizes="100vh" alt='Person' style={{
+          width: '90%',
           height: 'auto',
           borderRadius:  '.7vh',
         }}></Image>
+        <svg  id={Style.circle} xmlns="http://www.w3.org/2000/svg" width="247" height="247"><path d="M 123.5 0 C 191.707 0 247 55.293 247 123.5 C 247 191.707 191.707 247 123.5 247 C 55.293 247 0 191.707 0 123.5 C 0 55.293 55.293 0 123.5 0 Z" fill="rgb(255, 200, 62)"></path></svg>
+        <Image src={img_card} id={Style.card} sizes="100vh" alt='Person' style={{
+          width: '206px',
+          height: '173px',
+          borderRadius:  '.7vh',
+        }}></Image>
         </div>
+        </div>        
         <div className={Style.container_bienvenida}>
           <h1>Bienvenido a Jobsy</h1>
           <p className={Style.descripcion}>

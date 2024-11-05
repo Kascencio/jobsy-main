@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 .header{
-    width: 46vh;
+    margin: auto;
+    width: 100%;
     height: auto;
     background-color: #ffffff;
     display: flex;
@@ -12,6 +13,10 @@
     font-size: 0rem;
     font-weight: 600;
     border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.header h1{
+    font-size: 1.5rem;
 }
 
 .header nav{
@@ -172,7 +177,6 @@ box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
   @media screen and (min-width: 900px) {
     .header {
         width: 100%;
-        height: 20vh;
         flex-direction: row;
         font-size: 1.2rem;
         justify-content: space-evenly;

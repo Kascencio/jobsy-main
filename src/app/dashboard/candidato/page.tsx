@@ -33,7 +33,6 @@ export default function DashboardCandidato() {
         return <PerfilForm />;
       case 'postulaciones':
         return <PostulacionesList />;
-      // Puedes agregar más casos si tienes más secciones
       default:
         return null;
     }
@@ -46,7 +45,6 @@ export default function DashboardCandidato() {
         <div className={Style.container_active}>
           <Button className={Style.button} label="Mi Perfil" onClick={() => setActiveTab('perfil')} />
           <Button className={Style.button} label="Mis Postulaciones" onClick={() => setActiveTab('postulaciones')} />
-          {/* Agrega más botones para otras acciones */}
         </div>
         <div>{renderContent()}</div>
       </div>

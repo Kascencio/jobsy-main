@@ -21,8 +21,8 @@ export default function Dashboard() {
       router.replace('/dashboard/candidato');
     } else if (session?.user.role === 'reclutador') {
       router.replace('/dashboard/reclutador');
-    } else if (session?.user.role === 'administrador') {
-      router.replace('/dashboard/administrador');
+    } else if (session?.user.role === 'moderador') {
+      router.replace('/dashboard/moderador');
     } else {
       router.replace('/');
     }
