@@ -6,13 +6,12 @@
 }
 
 .main {
-  margin: 0;
+  margin: auto;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-size: 1rem;
-  background-color: #f9fafb;
-  background-color: aquamarine;  
+  background-color: #f9fafb; 
 }
 
 .main a {
@@ -21,7 +20,6 @@
 }
 
 .container {
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -41,7 +39,9 @@
   width: 60%;
   font-family: 'Satoshi', sans-serif;
   color: #f9fafb;
-  text-align: center;
+  text-align: left;
+  padding: 100px;
+  margin-left: 20px;
 }
 
 .title h1{
@@ -51,32 +51,16 @@
   font-weight: 800;
 }
 
-.title p{
-  padding: 20px 0px 0px 100px;
-}
-
-.img_container{
-
-}
-
 #person{
-  position: relative;
-  z-index: 1;
-  top:120px;
-  filter: drop-shadow(4px 24px 17px #153abf);
+  display:none;
 }
 
 #card{
-  position: relative;
-  z-index: 2;
-  left: 270px;
-  top: -180px;
+  display:none;
 }
 
 #circle{
-  position: absolute;
-  top: 270px;
-  right: 350px;
+  display:none;
 }
 
 
@@ -84,6 +68,8 @@
   .container_{
     flex-direction: column;
   }
+
+  
 
   
 }
@@ -97,6 +83,7 @@
 
 .lading{
   height: auto;
+  max-width: 1200px;
 }
 
 .container_bienvenida{
@@ -150,21 +137,9 @@
   font-style: normal;
 }
 
-.container_cards{
-  font-family: "Inter", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  text-align: center;
-  font-size: 1rem;
-}
-
 @media screen and (min-width: 768px) {
   .img_container{
-    width:82vh;
+    width:100vh;
   }
 
   .container_bienvenida{
@@ -176,13 +151,47 @@
     padding: 0vh 20vh 0vh 20vh;
   }
 
-  .button{
-    width: 50%;
-    height: 9vh;
-  }
+#person{
+  display: flex;
+  position: relative;
+  z-index: 1;
+  top:70px;
+  filter: drop-shadow(4px 24px 17px #153abf);
+}
 
-  .container_cards{
-    flex-direction: column;
+#card{
+  display: flex;
+  position: relative;
+  z-index: 2;
+  left: 270px;
+  top: -180px;
+}
+
+#circle{
+  display: flex;
+  position: absolute;
+  top: 270px;
+  right: 350px;
+}
+
+.title p{
+  line-height: 1.5em;
+  font-size: 1rem;
+  padding-bottom:30px ;
+}
+
+.title p span{
+  font-weight: bold;
+}
+
+.button_landing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #363FF5;
+  width: 211px;
+  height: 52px;
+  border-radius: 5px;
 }
 
 }

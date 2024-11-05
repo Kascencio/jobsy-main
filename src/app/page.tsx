@@ -26,13 +26,13 @@ export default async function Home() {
         <div className={Style.container_}>
           <section className={Style.title}>
           <h1>
-          Bienvenido a Jobsy
+          Bienvenido a  <br />Jobsy
           </h1>
           <p>
-          <span>Conectamos talento y oportunidades:</span> una plataforma para reclutadores y candidatos en busca de su próximo gran paso.
+          <span>Conectamos talento y oportunidades:</span> Una plataforma <br /> para reclutadores y candidatos en busca de su próximo gran paso.
           </p>
           <Link href={"/login"} className={Style.button_landing}>
-            Ingresa Gratis
+            Buscar Empleo
           </Link>
           </section>
         <div className={Style.img_container}>
@@ -47,6 +47,8 @@ export default async function Home() {
           height: '173px',
           borderRadius:  '.7vh',
         }}></Image>
+        </div>
+        <div className={Style.blur_img}>
         </div>
         </div>        
         <div className={Style.container_bienvenida}>

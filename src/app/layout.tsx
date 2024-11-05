@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Providers from './components/Providers';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import './globals.module.css';
+import Style from './globals.module.css';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -13,10 +13,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es">
-      <body className='main'>
+      <body className={Style.main}>
         <Providers>
           <Header />
-          <main className="container mx-auto p-4 min-h-screen">{children}</main>
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>
