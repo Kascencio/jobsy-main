@@ -1,6 +1,6 @@
 // src/app/ofertas/[id]/page.tsx
 
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 interface Params {
   params: {

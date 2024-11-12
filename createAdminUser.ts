@@ -1,6 +1,6 @@
 // createAdminUser.ts
 
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 
 async function createAdminUser() {

@@ -1,7 +1,7 @@
 // src/app/ofertas/page.tsx
 
 import OfertaCard from '../components/OfertaCard';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export default async function Ofertas() {
   const empleos = await prisma.empleo.findMany({
