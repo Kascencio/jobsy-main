@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Style from '../componets.module.css';
 import PostulacionesList from './PostulacionesList';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 
 export interface Empleo {
   emp_id: number;
@@ -34,10 +36,31 @@ interface Props {
 
 export default function EmpleosList({ empleos }: Props) {
   const [empleoSeleccionado, setEmpleoSeleccionado] = useState<number | null>(null);
+  const [listaEmpleos, setListaEmpleos] = useState<Empleo[]>(empleos);
 
-  if (empleos.length === 0) {
-    return <p>No has publicado ninguna oferta aún.</p>;
-  }
+  const handleDelete = async (empId: number) => {
+    const confirmar = window.confirm('¿Estás seguro de que deseas eliminar este empleo?');
+    console.log(listaEmpleos);
+    if (!confirmar) return;
+
+    try {
+      const res = await fetch(`/api/reclutador/empleos/${empId}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        setListaEmpleos((prevEmpleos) => prevEmpleos.filter((empleo) => empleo.emp_id !== empId));
+        toast.success('Empleo eliminado correctamente');
+      } else {
+        const errorData = await res.json();
+        toast.error(`Error al eliminar el empleo: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error al eliminar el empleo:', error);
+      toast.error('Error al eliminar el empleo');
+    }
+  };
+
 
   return (
     <ul className={Style.container_cards}>
@@ -52,6 +75,7 @@ export default function EmpleosList({ empleos }: Props) {
           <button onClick={() => setEmpleoSeleccionado(empleo.emp_id)}>
             {empleoSeleccionado === empleo.emp_id ? 'Ocultar Postulaciones' : 'Ver Postulaciones'}
           </button>
+          <button onClick={() => handleDelete(empleo.emp_id)}>Eliminar Empleo</button>
           {empleoSeleccionado === empleo.emp_id && <PostulacionesList empId={empleo.emp_id} />}
         </li>
       ))}
