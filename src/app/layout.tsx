@@ -7,7 +7,9 @@ import Footer from './components/Footer';
 import Style from './globals.module.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -24,6 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </Providers>
         <ToastContainer />
         <Analytics/>
+        <SpeedInsights />
       </body>
     </html>
   );
