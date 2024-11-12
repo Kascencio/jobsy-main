@@ -1,7 +1,9 @@
 // src/app/api/auth/register/route.ts
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
+
+export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
   const data = await request.json();

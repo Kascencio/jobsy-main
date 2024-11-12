@@ -1,7 +1,7 @@
 // src/app/page.tsx
 
 import OfertaCard from "./components/OfertaCard";
-import prisma from "@/lib/prisma";
+import { prisma } from '@/lib/prisma';
 import Image from "next/image";
 import img_person from "public/images/Landing_Person.png";
 import img_card from "public/images/Card_.png";
