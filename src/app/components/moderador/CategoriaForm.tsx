@@ -20,7 +20,7 @@ export default function CategoriaForm() {
     if (res.ok) {
       alert('Categoría creada correctamente');
       setNombre('');
-      // Opcional: Actualizar la lista de categorías
+      
     } else {
       alert('Error al crear la categoría');
     }
