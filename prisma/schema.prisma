@@ -99,9 +99,11 @@ model postulacion {
   empleo                empleo   @relation(fields: [pos_empleo_id], references: [emp_id], onDelete: Cascade)
   usuario               usuario  @relation(fields: [pos_usuario_id], references: [usu_id], onDelete: Cascade)
 
+  @@unique([pos_usuario_id, pos_empleo_id], name: "usuario_empleo_unique")
   @@index([pos_empleo_id])
   @@index([pos_usuario_id])
 }
+
 
 model usuario {
   usu_id              Int                 @id @default(autoincrement())

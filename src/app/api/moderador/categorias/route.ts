@@ -1,19 +1,19 @@
-// src/app/api/administrador/categorias/route.ts
-
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth'; // Importación corregida
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { NextRequest } from 'next/server'; // Opcional
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  console.log(request);
   const categorias = await prisma.categoria.findMany();
   return NextResponse.json(categorias);
 }
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
+export async function POST(request: NextRequest) {
+  const session = await getServerSession(authOptions); // Llamada corregida
 
-  if (!session || session.user.role !== 'administrador') {
+  if (!session || session.user.role !== 'moderador') {
     return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
   }
 
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(nuevaCategoria);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ error: 'Error al crear la categoría' }, { status: 500 });
   }
 }

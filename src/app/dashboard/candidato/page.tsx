@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import PerfilForm from '../../components/candidato/PerfilForm';
 import PostulacionesList from '../../components/candidato/PostulacionesList';
 import Button from '../../components/Button';
-import Style from './candidato.module.css'
+import BuscarEmpleos from '@/app/components/candidato/BuscarEmpleo';
+import Style from './candidato.module.css';
 
 export default function DashboardCandidato() {
   const { data: session, status } = useSession();
@@ -26,13 +27,14 @@ export default function DashboardCandidato() {
   if (status === 'loading') {
     return <p>Cargando...</p>;
   }
-
   const renderContent = () => {
     switch (activeTab) {
       case 'perfil':
         return <PerfilForm />;
       case 'postulaciones':
         return <PostulacionesList />;
+      case 'buscarEmpleos':
+        return <BuscarEmpleos />; // Nuevo componente
       default:
         return null;
     }
@@ -45,6 +47,7 @@ export default function DashboardCandidato() {
         <div className={Style.container_active}>
           <Button className={Style.button} label="Mi Perfil" onClick={() => setActiveTab('perfil')} />
           <Button className={Style.button} label="Mis Postulaciones" onClick={() => setActiveTab('postulaciones')} />
+          <Button className={Style.button} label="Buscar Empleos" onClick={() => setActiveTab('buscarEmpleos')} /> {/* Nueva pestaña */}
         </div>
         <div>{renderContent()}</div>
       </div>

@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <>
       <div className={Style.container_login}>
-      <h1 className={Style.title}>Iniciar Sesión </h1>
+      <h1 className={Style.title}>Bienvenido/a de vuelta</h1>
       <form onSubmit={handleSubmit}>
         <Input  classname={Style.input} label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
         <Input  classname={Style.input} label="Contraseña" type="password" name="password" onChange={handleChange} required />

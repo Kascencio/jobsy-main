@@ -10,16 +10,21 @@ export async function GET() {
     return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
   }
 
-  const postulaciones = await prisma.postulacion.findMany({
-    where: { pos_usuario_id: Number(session.user.id) },
-    include: {
-      empleo: {
-        include: {
-          empresa: true,
+  try {
+    const postulaciones = await prisma.postulacion.findMany({
+      where: { pos_usuario_id: Number(session.user.id) },
+      include: {
+        empleo: {
+          include: {
+            empresa: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  return NextResponse.json(postulaciones);
+    return NextResponse.json(postulaciones);
+  } catch (error) {
+    console.error('Error al obtener las postulaciones:', error);
+    return NextResponse.json({ error: 'Error al obtener las postulaciones' }, { status: 500 });
+  }
 }

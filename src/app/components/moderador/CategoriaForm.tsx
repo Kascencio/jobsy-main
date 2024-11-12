@@ -9,7 +9,7 @@ export default function CategoriaForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch('/api/moderador/categorias', {
+    const res = await fetch('/api/moderador/categorias', { // Ruta actualizada
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

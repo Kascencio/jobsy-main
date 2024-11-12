@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/lib/prisma';
 import { compare } from 'bcryptjs';
 
+export const runtime = 'nodejs';
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -50,7 +51,7 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-  },
+  },  
   session: {
     strategy: 'jwt',
   },

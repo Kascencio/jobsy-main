@@ -3,14 +3,19 @@
 import { useState, useEffect } from 'react';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import Style from '../componets.module.css'
+import Style from '../componets.module.css';
+import { Empleo} from '@/types'; 
 
 interface Categoria {
   cat_id: number;
   cat_nombre: string;
 }
 
-export default function CrearEmpleoForm() {
+interface Props {
+  agregarEmpleo: (empleo: Empleo) => void;
+}
+
+export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
   const [form, setForm] = useState({
     titulo: '',
     descripcion: '',
@@ -55,7 +60,10 @@ export default function CrearEmpleoForm() {
     });
 
     if (res.ok) {
+      const nuevoEmpleo = await res.json();
       alert('Empleo creado correctamente');
+      // Agregar el nuevo empleo al estado en el componente padre
+      agregarEmpleo(nuevoEmpleo);
       // Reiniciar el formulario
       setForm({
         titulo: '',
