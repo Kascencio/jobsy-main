@@ -65,6 +65,7 @@ export default function PostulacionesList({ empId }: Props) {
 
   return (
     <div>
+      <div className={Style.container_postulaciones}></div>
       <h3 className={Style.title}>Postulaciones</h3>
       <ul className={Style.container_cards}>
         {postulaciones.map((postulacion) => (

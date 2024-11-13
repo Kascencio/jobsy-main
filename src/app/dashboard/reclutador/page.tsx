@@ -49,12 +49,12 @@ export default function DashboardReclutador() {
 
   return (
     <div className={Style.container}>
-      <h1 className="text-2xl font-bold mb-6">Dashboard del Reclutador</h1>
+      <h1 className="text-2xl font-bold mb-6">Herramientas</h1>
       <EmpresaForm />
       <CrearEmpleoForm agregarEmpleo={agregarEmpleo} />
       <div className={Style.container_ofertas}>
         <div className={Style.card}>
-          <h2 className="text-xl font-bold my-4">Mis Ofertas de Empleo</h2>
+          <h2 className="">Mis Ofertas de Empleo</h2>
           <EmpleosList empleos={empleos} />
         </div>
       </div>

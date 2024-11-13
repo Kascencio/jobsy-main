@@ -49,9 +49,9 @@ export default function Header() {
             <Link href="/perfil">
               <span className="mr-4">Perfil</span>
             </Link>
-            <button style={{width: '18vh'}} onClick={() => signOut()} className={Style.button_active}>
+            <a onClick={() => signOut()}>
               Cerrar Sesión
-            </button>
+            </a>
           </>
         ) : (
           <>

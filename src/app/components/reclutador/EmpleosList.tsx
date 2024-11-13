@@ -61,16 +61,17 @@ export default function EmpleosList({ empleos }: Props) {
   };
 
   return (
-    <ul className={Style.container_cards}>
+    <ul className={Style.container_empleo_list}>
       {empleos.map((empleo: Empleo) => (
-        <li key={empleo.emp_id} className={Style.container_card} style={{ marginTop: 30 }}>
+        <li key={empleo.emp_id} className={Style.card_empleo_list} style={{ marginTop: 30 }}>
           <h3 className={Style.title_empleo}>
             <Link href={`/ofertas/${empleo.emp_id}`}>{empleo.emp_titulo}</Link>
           </h3>
-          <p>{empleo.emp_descripcion}</p>
-          {empleo.empresa && <p>Empresa: {empleo.empresa.emp_nombre}</p>}
-          {empleo.categoria && <p>Categoría: {empleo.categoria.cat_nombre}</p>}
-          <button
+          <p className={Style.p_empleo}>{empleo.emp_descripcion}</p>
+          {empleo.empresa && <p className={Style.p_empresa}>Empresa: {empleo.empresa.emp_nombre}</p>}
+          {empleo.categoria && <p className={Style.p_categoria}>Categoría: {empleo.categoria.cat_nombre}</p>}
+          <div className={Style.container_buttons}>
+          <button className={Style.button_empleo}
             onClick={() => {
               if (empleoSeleccionado === empleo.emp_id) {
                 setEmpleoSeleccionado(null); // Oculta las postulaciones
@@ -81,8 +82,9 @@ export default function EmpleosList({ empleos }: Props) {
           >
             {empleoSeleccionado === empleo.emp_id ? 'Ocultar Postulaciones' : 'Ver Postulaciones'}
           </button>
-          <button onClick={() => handleDelete(empleo.emp_id)}>Eliminar Empleo</button>
+          <a className={Style.button_empleo_delete} onClick={() => handleDelete(empleo.emp_id)}>Eliminar Empleo</a>
           {empleoSeleccionado === empleo.emp_id && <PostulacionesList empId={empleo.emp_id} />}
+          </div>
         </li>
       ))}
     </ul>
