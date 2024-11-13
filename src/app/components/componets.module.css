@@ -21,6 +21,14 @@
 
 .header nav{
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.header ul{
+    list-style-type: none;
 }
 
 .header span{
@@ -49,33 +57,77 @@
     align-items: center;
 }
 
-.container_inputs{
-    width: 100%;
-    height: auto;
+.forms{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+    width: 30vh;
+    height: 30vh;
 }
 
-.label{
-    font-size: 1.1rem;
-    margin-bottom: 2vh;
-    margin-top: 3vh;
+.container_inputs{
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 100%;
 }
 
+.inputs {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: black;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.inputs:focus {
+  ~ .label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight:700;    
+  }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e,#38ef7d);
+  border-image-slice: 1;
+}
+/* reset input */
 .input{
-    width: 20vh;
-    background-color: #ffffff;
-    border-radius: 2px;
-    height: 3vh;
+  &:required,&:invalid { box-shadow:none; }
 }
+
 
 .button{
-    width: 18vh;
+    width: 30vh;
     height: 5vh;
     margin-top: 3vh;
     font-size: 1rem;
@@ -257,18 +309,10 @@
         height: 10vh;
     }
 
-    .container_inputs{
-        font-size: 1.2rem;
-    }
-    
-    .label{
-        font-size: 1.2rem;
-    }
-    
-    .input{
-        width: 28vh;
-    }
-    
+    .form{
+
+    } 
+
     .button{
         width: 30vh;
     }

@@ -43,9 +43,9 @@ export default function Login() {
     <>
       <div className={Style.container_login}>
       <h1 className={Style.title}>Bienvenido/a de vuelta</h1>
-      <form onSubmit={handleSubmit}>
-        <Input  classname={Style.input} label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
-        <Input  classname={Style.input} label="Contraseña" type="password" name="password" onChange={handleChange} required />
+      <form style={{display: 'flex' , justifyContent:'center' , alignItems:'center', flexDirection:'column'}} onSubmit={handleSubmit}>
+        <Input  label="Correo Electrónico" type="email" name="email" holder="Name" onChange={handleChange} required />
+        <Input  label="Contraseña" type="password" name="password" holder="Passowrd" onChange={handleChange} required />
         <Button label="Iniciar Sesión" type="submit" className={Style.Button} />
       </form>
       </div>

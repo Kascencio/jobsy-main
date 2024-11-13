@@ -4,24 +4,25 @@ interface InputProps {
     label: string;
     type: string;
     name: string;
+    holder: string;
     value?: string;
-    classname?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
   }
   
-  export default function Input({ label, type, name, value, onChange, required = false, classname }: InputProps) {
+  export default function Input({ label, type, name, value, onChange, required = false, holder}: InputProps) {
     return (
       <div className={Style.container_inputs}>
-        <label className={Style.label}>{label}</label>
         <input
-          className={classname}
+          className={Style.inputs}
           type={type}
           name={name}
           value={value}
           onChange={onChange}
           required={required}
+          placeholder={holder}
         />
+        <label className={Style.label}>{label}</label>
       </div>
     );
   }
