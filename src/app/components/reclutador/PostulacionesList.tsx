@@ -28,20 +28,20 @@ export default function PostulacionesList({ empId }: Props) {
 
   useEffect(() => {
     const fetchPostulaciones = async () => {
-      const res = await fetch(`/api/reclutador/empleos/${empId}`);
+      const res = await fetch(`/api/reclutador/empleos/${empId}/postulaciones`);
       if (res.ok) {
         const data = await res.json();
         setPostulaciones(data);
       } else {
         console.error('Error al obtener las postulaciones');
       }
-    };
+    };    
 
     fetchPostulaciones();
   }, [empId]);
 
   const actualizarEstado = async (posId: number, nuevoEstado: string) => {
-    const res = await fetch(`/api/reclutador/empleos/postulaciones/${posId}`, {
+    const res = await fetch(`/api/reclutador/postulaciones/${posId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

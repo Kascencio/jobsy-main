@@ -31,8 +31,8 @@ export default async function Home() {
               Una plataforma para reclutadores y candidatos en busca de su
               próximo gran paso.
             </p>
-            <Link href={"/login"} className={Style.button_landing}>
-              Buscar Empleo
+            <Link href={"/login"} >
+            <button className={Style.button_landing}>Buscar Empleo</button>
             </Link>
           </section>
           <div className={Style.img_container}>
@@ -70,11 +70,11 @@ export default async function Home() {
               }}
             ></Image>
           </div>
-          <div className={Style.blur_img}></div>
         </div>
       </div>
       {/*EMPLEOS*/}
       <div className={Style.container_empleos}>
+        <h1>Ultimas ofertas de empleo</h1>
         <div className={Style.container_cards}>
           {empleos.map((empleo) => (
             <OfertaCard

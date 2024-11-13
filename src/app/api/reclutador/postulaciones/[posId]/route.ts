@@ -14,7 +14,6 @@ export async function PUT(req: Request, { params }: { params: { posId: string } 
   const { nuevoEstado } = await req.json();
 
   try {
-    // Verificar que la postulación pertenece a un empleo del reclutador
     const postulacion = await prisma.postulacion.findFirst({
       where: {
         pos_id: posId,
@@ -28,7 +27,6 @@ export async function PUT(req: Request, { params }: { params: { posId: string } 
       return NextResponse.json({ error: 'Postulación no encontrada o no autorizada' }, { status: 404 });
     }
 
-    // Actualizar el estado de la postulación
     const updatedPostulacion = await prisma.postulacion.update({
       where: { pos_id: posId },
       data: { pos_estado: nuevoEstado },

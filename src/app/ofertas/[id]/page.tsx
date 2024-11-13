@@ -1,6 +1,8 @@
 // src/app/ofertas/[id]/page.tsx
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
+import Style from "../../components/componets.module.css";
+import Link from "next/link";
 
 interface Params {
   params: {
@@ -23,21 +25,37 @@ export default async function DetalleOferta({ params }: Params) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">{empleo.emp_titulo}</h1>
-      <p className="text-gray-700 mb-2">
-        <strong>Empresa:</strong> {empleo.empresa.emp_nombre}
-      </p>
-      <p className="text-gray-700 mb-2">
-        <strong>Categoría:</strong> {empleo.categoria.cat_nombre}
-      </p>
-      <p className="text-gray-700 mb-4">
-        <strong>Fecha de Publicación:</strong> {new Date(empleo.emp_fecha_publicacion).toLocaleDateString()}
-      </p>
-      <p className="mb-4">
-        <strong>Descripción:</strong>
-      </p>
-      <p className="text-gray-800 mb-6">{empleo.emp_descripcion}</p>
-      {/* Agrega más detalles según sea necesario */}
+
+      <div className={Style.container_cards}>
+      <Link href="/">
+      <button className={Style.button_view}>
+        Volver a la página principal
+      </button>
+      </Link>
+      <div className={Style.container_card_view} style={{marginTop:30}}>
+        <h1 className={Style.title_empleo}>{empleo.emp_titulo}</h1>
+        <p className={Style.p_empresa}>
+          <strong>Empresa:</strong> {empleo.empresa.emp_nombre}
+        </p>
+        <p className="text-gray-700 mb-2">
+          <strong>Categoría:</strong> {empleo.categoria.cat_nombre}
+        </p>
+        <p className={Style.p_fecha}>
+          <strong>Fecha de Publicación:</strong>{" "}
+          {new Date(empleo.emp_fecha_publicacion).toLocaleDateString()}
+        </p>
+        <p className="mb-4">
+          <strong>Descripción:</strong>
+        </p>
+        <p className={Style.descripcion}>{empleo.emp_descripcion}</p>
+        {/* Agrega más detalles según sea necesario */}
+        <Link href='/login'>
+        <button className={Style.button_view}>
+          Postularte
+        </button>
+        </Link>
+        </div>
+      </div>
     </div>
   );
 }

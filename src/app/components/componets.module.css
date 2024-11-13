@@ -75,10 +75,22 @@
 }
 
 .button{
-    width: 21vh;
+    width: 18vh;
     height: 5vh;
     margin-top: 3vh;
     font-size: 1rem;
+    background-color: blue;
+    border-radius: .5vh;
+    border-style: 1px groove #069DFF;
+    color: #ffffff;
+}
+
+.button_view{
+    width: 30vh;
+    height: 6vh;
+    margin-top: 3vh;
+    font-size: .9rem;
+    font-weight: bold;
     background-color: blue;
     border-radius: .5vh;
     border-style: 1px groove #069DFF;
@@ -149,30 +161,75 @@
     font-size: 1rem;
 }
 
-.container_card{
-    background-color:#d9d9d9;
-    color: rgb(0, 0, 0);
-    width: 80%;
-    height: 30vh;
+.container_card_main{
+    font-family: "Inter", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 160px;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+}
 
-    border-radius: 41px 1px 94px 1px;
--moz-border-radius: 41px 1px 94px 1px;
--webkit-border-radius: 41px 1px 94px 1px;
-border: 0px solid #050505;
--webkit-box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
--moz-box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
-box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
+.container_card{
+    background-color:#ffffff;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: 44vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    -webkit-box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    -moz-box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    border-radius: 10px;
+}
+
+.descripcion{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_card_view{
+    background-color:#ffffff;
+    color: rgb(0, 0, 0);
+    width:60vh;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    -webkit-box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    -moz-box-shadow: 3px 6px 39px -6px rgba(137,137,137,0.77);
+    border-radius: 10px;
 }
 
 .title_empleo{
-    color: #1500ff;
+    color: #003646;
+    font-size: 1.2rem;
 }
 
+.p_empresa{
+    font-size: .9rem;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: blue;
+}
 
+.p_fecha{
+    font-size: .9rem;
+    background-color: #525252;
+    color: #ffffff;
+    padding: 5px;
+    border-radius:5px;
+}
 
   @media screen and (min-width: 900px) {
     .header {
@@ -223,11 +280,36 @@ box-shadow: 11px 10px 0px -1px rgba(0,0,0,0.75);
 
     .container_cards{
         flex-direction: row;
+        height: 70vh;
     }
 
     .container_card{
-        margin-left: 4vh;
-        width: 35vh;
+        width: 40vh;
+        border-radius: 10px;
         flex-direction: column;
+    }
+
+    .container_card_view{
+        width: 40vh;
+        border-radius: 10px;
+        flex-direction: column;
+    }
+
+    .container_card_main{
+        margin: auto;
+    }
+
+    .title_empleo{
+        font-size: 1.6rem;
+        padding: 0px 20px 0px 20px;
+    }
+    
+    .p_empresa{
+        font-size: 1rem;
+
+    }
+    
+    .p_fecha{
+        font-size: .9rem;
     }
 }

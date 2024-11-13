@@ -6,7 +6,6 @@ import PostulacionesList from './PostulacionesList';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-
 export interface Empleo {
   emp_id: number;
   emp_titulo: string;
@@ -61,7 +60,6 @@ export default function EmpleosList({ empleos }: Props) {
     }
   };
 
-
   return (
     <ul className={Style.container_cards}>
       {empleos.map((empleo: Empleo) => (
@@ -72,7 +70,15 @@ export default function EmpleosList({ empleos }: Props) {
           <p>{empleo.emp_descripcion}</p>
           {empleo.empresa && <p>Empresa: {empleo.empresa.emp_nombre}</p>}
           {empleo.categoria && <p>Categoría: {empleo.categoria.cat_nombre}</p>}
-          <button onClick={() => setEmpleoSeleccionado(empleo.emp_id)}>
+          <button
+            onClick={() => {
+              if (empleoSeleccionado === empleo.emp_id) {
+                setEmpleoSeleccionado(null); // Oculta las postulaciones
+              } else {
+                setEmpleoSeleccionado(empleo.emp_id); // Muestra las postulaciones
+              }
+            }}
+          >
             {empleoSeleccionado === empleo.emp_id ? 'Ocultar Postulaciones' : 'Ver Postulaciones'}
           </button>
           <button onClick={() => handleDelete(empleo.emp_id)}>Eliminar Empleo</button>
