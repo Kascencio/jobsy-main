@@ -53,8 +53,8 @@ export default function EmpresaForm() {
     <div className={Style.container}>
       <h2 className={Style.title}>Datos de la Empresa</h2>
       <form onSubmit={handleSubmit}>
-        <Input  classname={Style.input} label="Nombre de la Empresa" type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
-        <Input classname={Style.input} label="Sector" type="text" name="sector" value={form.sector} onChange={handleChange} required />
+        <Input holder='Nombre de la Empresa' label="Nombre de la Empresa" type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
+        <Input holder='Sector' label="Sector" type="text" name="sector" value={form.sector} onChange={handleChange} required />
         <Button className={Style.button} label="Guardar Empresa" type="submit" />
       </form>
     </div>

@@ -37,6 +37,7 @@ export default function CategoriaForm() {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
+          holder='Nombre Categoria'
         />
         <Button label="Crear Categoría" type="submit" />
       </form>

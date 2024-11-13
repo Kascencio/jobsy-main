@@ -85,7 +85,7 @@ export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
     <div className={Style.container_CrearEmpleo} style={{marginTop:30}}>
       <h2 className={Style.title}>Crear Nueva Oferta de Empleo</h2>
       <form onSubmit={handleSubmit}>
-        <Input classname={Style.input} label="Título del Empleo" type="text" name="titulo" value={form.titulo} onChange={handleChange} required />
+        <Input holder="Título del Empleo" label="Título del Empleo" type="text" name="titulo" value={form.titulo} onChange={handleChange} required />
         <div className={Style.container} style={{marginTop:16}}>
           <label className={Style.title}>Descripción</label>
           <textarea

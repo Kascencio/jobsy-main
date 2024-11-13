@@ -60,11 +60,11 @@ export default function PerfilForm() {
     <div className={Style.container_PerfilList}>
       <h2 className={Style.title}>Mi Perfil</h2>
       <form onSubmit={handleSubmit}>
-        <Input classname={Style.input_perfil} label="Nombre" type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
-        <Input classname={Style.input_perfil} label="Apellido" type="text" name="apellido" value={form.apellido} onChange={handleChange} />
-        <Input classname={Style.input_perfil} label="Correo Electrónico" type="email" name="email" value={form.email} onChange={handleChange} required />
-        <Input classname={Style.input_perfil} label="Teléfono" type="text" name="telefono" value={form.telefono} onChange={handleChange} />
-        <Input classname={Style.input_perfil} label="Dirección" type="text" name="direccion" value={form.direccion} onChange={handleChange} />
+        <Input label="Nombre" type="text" holder="Nombre" name="nombre" value={form.nombre} onChange={handleChange} required />
+        <Input  label="Apellido" type="text" holder="Apellido" name="apellido" value={form.apellido} onChange={handleChange} />
+        <Input  label="Correo Electrónico" holder="Email" type="email" name="email" value={form.email} onChange={handleChange} required />
+        <Input  label="Teléfono" type="text" holder="Telefono" name="telefono" value={form.telefono} onChange={handleChange} />
+        <Input  label="Dirección" type="text" holder="Dirección" name="direccion" value={form.direccion} onChange={handleChange} />
         <div className={Style.container_Resumen}>
           <label className={Style.title_resumen}>Resumen Profesional</label>
           <textarea

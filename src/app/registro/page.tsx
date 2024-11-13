@@ -47,10 +47,10 @@ export default function Registro() {
     <div className={Style.container_registro}>
       <h1 className={Style.title}>Registro</h1>
       <form onSubmit={handleSubmit}>
-        <Input classname={Style.input} label="Nombre" type="text" name="nombre" onChange={handleChange} required />
-        <Input classname={Style.input} label="Apellido" type="text" name="apellido" onChange={handleChange} />
-        <Input classname={Style.input} label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
-        <Input classname={Style.input} label="Contraseña" type="password" name="password" onChange={handleChange} required />
+        <Input holder='Nombre' label="Nombre" type="text" name="nombre" onChange={handleChange} required />
+        <Input  holder='Apellido' label="Apellido" type="text" name="apellido" onChange={handleChange} />
+        <Input  holder='Correo Electronico' label="Correo Electrónico" type="email" name="email" onChange={handleChange} required />
+        <Input  holder='Contraseña' label="Contraseña" type="password" name="password" onChange={handleChange} required />
         <div className={Style.container_options}>
           <label className={Style.label}>Rol</label>
           <select
