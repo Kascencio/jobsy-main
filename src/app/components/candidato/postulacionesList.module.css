@@ -1,0 +1,15 @@
+/* postulacionesList.module.css */
+
+.container {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  
+  .link {
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  

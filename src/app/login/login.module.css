@@ -1,55 +1,59 @@
+/* login.module.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-.container_login{
-    width: 100%;
-    height: 50vh;
+.container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    background-color: #FFFFFF;
-}
-
-.container_register{
-    display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 20vh;
-    font-size: 1rem;
-    font-family: "Inter", sans-serif;
-    text-align: center;
-}
-
-.Button{
-    width: 100%;
-    height: 6vh;
-    margin-top: 2vh;
-    background-color: #453ea4;
-    border-radius: 5px;
-    color: #ffff;
-    font-size: 1.2rem;
-    font-weight: 500;
+    min-height: 100vh;
+    background-color: #ffffff; /* Fondo blanco */
+    padding-top: 60px; /* Espacio superior */
+    padding-bottom: 60px; /* Espacio inferior opcional */
   }
-
-  .input{
+  
+  .formContainer {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    padding: 40px;
+    border-radius: 16px; /* Bordes redondeados */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra para relieve */
     width: 100%;
-    height: 3vh;
-}
-
-@media screen and (min-width: 900px) {
-    .container_login{
-        width: 100%;
-        height: 60vh;
+    max-width: 500px;
+  }
+  
+  .formContainer h1 {
+    margin-bottom: 20px;
+  }
+  
+  .formContainer form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formContainer .MuiTextField-root,
+  .formContainer .MuiFormControl-root {
+    margin-top: 10px;
+  }
+  
+  .formContainer .MuiButton-root {
+    margin-top: 20px;
+  }
+  
+  .registerLink {
+    margin-top: 20px;
+  }
+  
+  .link {
+    color: #001f3f; /* Azul marino */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .formContainer {
+      padding: 20px;
     }
-
-    .Button{
-        width: 30vh;
-        margin-top: 4vh;
-    }
-}
+  }
+  

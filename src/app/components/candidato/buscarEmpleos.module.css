@@ -1,0 +1,14 @@
+/* buscarEmpleos.module.css */
+
+.container {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  

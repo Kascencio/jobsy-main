@@ -4,6 +4,20 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+  Chip,
+  Divider,
+  CircularProgress,
+  Container,
+} from '@mui/material';
+import { WorkOutline as WorkOutlineIcon } from '@mui/icons-material';
+import Style from './postulacionesList.module.css';
 
 interface Empresa {
   emp_id: number;
@@ -39,36 +53,84 @@ interface Postulacion {
 
 export default function PostulacionesList() {
   const [postulaciones, setPostulaciones] = useState<Postulacion[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Obtener las postulaciones desde la API
     const fetchData = async () => {
-      const res = await fetch('/api/candidato/postulaciones');
-      const data: Postulacion[] = await res.json();
-      setPostulaciones(data);
+      try {
+        const res = await fetch('/api/candidato/postulaciones');
+        const data: Postulacion[] = await res.json();
+        setPostulaciones(data);
+      } catch (error) {
+        console.error('Error al obtener las postulaciones:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <Container className={Style.container}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
   if (postulaciones.length === 0) {
-    return <p>No has postulado a ninguna oferta aún.</p>;
+    return (
+      <Container className={Style.container}>
+        <Typography variant="h6" align="center">
+          No has postulado a ninguna oferta aún.
+        </Typography>
+      </Container>
+    );
   }
 
   return (
-    <ul>
-      {postulaciones.map((postulacion) => (
-        <li key={postulacion.pos_id} className="mb-4 border p-4 rounded">
-          <h3 className="text-lg font-bold">
-            <Link href={`/ofertas/${postulacion.empleo.emp_id}`}>
-              {postulacion.empleo.emp_titulo}
-            </Link>
-          </h3>
-          <p>{postulacion.empleo.empresa.emp_nombre}</p>
-          <p>Estado: {postulacion.pos_estado}</p>
-        </li>
-      ))}
-    </ul>
+    <Container className={Style.container}>
+      <Typography variant="h5" gutterBottom>
+        Mis Postulaciones
+      </Typography>
+      <List>
+        {postulaciones.map((postulacion) => (
+          <div key={postulacion.pos_id}>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar>
+                  <WorkOutlineIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Link href={`/ofertas/${postulacion.empleo.emp_id}`} passHref>
+                    <Typography variant="h6" color="primary" className={Style.link}>
+                      {postulacion.empleo.emp_titulo}
+                    </Typography>
+                  </Link>
+                }
+                secondary={
+                  <>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {postulacion.empleo.empresa.emp_nombre}
+                    </Typography>
+                    {' — '}
+                    Estado: <Chip label={postulacion.pos_estado} color="primary" size="small" />
+                  </>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+          </div>
+        ))}
+      </List>
+    </Container>
   );
 }
-

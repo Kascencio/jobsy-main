@@ -1,22 +1,38 @@
+// src/app/dashboard/candidato/page.tsx
+
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import PerfilForm from '../../components/candidato/PerfilForm';
 import PostulacionesList from '../../components/candidato/PostulacionesList';
-import Button from '../../components/Button';
-import BuscarEmpleos from '@/app/components/candidato/BuscarEmpleo';
+import BuscarEmpleos from '../../components/candidato/BuscarEmpleo';
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Box,
+  Typography,
+  Toolbar,
+  IconButton,
+} from '@mui/material';
+import {
+  AccountCircle,
+  WorkOutline,
+  Search,
+  Logout,
+} from '@mui/icons-material';
 import Style from './candidato.module.css';
 
 export default function DashboardCandidato() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('perfil');
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     if (status === 'loading') {
-      console.log('Session data:', session);
+      // Puedes mostrar un spinner aquí si lo deseas
     } else if (status === 'unauthenticated') {
       router.push('/login');
     } else if (session?.user.role !== 'candidato') {
@@ -27,30 +43,52 @@ export default function DashboardCandidato() {
   if (status === 'loading') {
     return <p>Cargando...</p>;
   }
+
+  const handleLogout = async () => {
+    await signOut({ redirect: true, callbackUrl: '/login' });
+  };
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+
   const renderContent = () => {
     switch (activeTab) {
-      case 'perfil':
+      case 0:
         return <PerfilForm />;
-      case 'postulaciones':
+      case 1:
         return <PostulacionesList />;
-      case 'buscarEmpleos':
-        return <BuscarEmpleos />; // Nuevo componente
+      case 2:
+        return <BuscarEmpleos />;
       default:
         return null;
     }
   };
 
   return (
-    <div>
-      <div className={Style.container}>
-        <h1 className={Style.title}>Dashboard del Candidato</h1>
-        <div className={Style.container_active}>
-          <Button className={Style.button} label="Mi Perfil" onClick={() => setActiveTab('perfil')} />
-          <Button className={Style.button} label="Mis Postulaciones" onClick={() => setActiveTab('postulaciones')} />
-          <Button className={Style.button} label="Buscar Empleos" onClick={() => setActiveTab('buscarEmpleos')} /> {/* Nueva pestaña */}
-        </div>
-        <div>{renderContent()}</div>
-      </div>
+    <div className={Style.container}>
+      <AppBar position="static" className={Style.appBar}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Bolsa de Trabajo
+          </Typography>
+          <IconButton color="inherit" onClick={handleLogout}>
+            <Logout />
+          </IconButton>
+        </Toolbar>
+        <Tabs
+          value={activeTab}
+          onChange={handleChangeTab}
+          indicatorColor="primary"
+          textColor="inherit"
+          variant="fullWidth"
+        >
+          <Tab icon={<AccountCircle />} label="Mi Perfil" />
+          <Tab icon={<WorkOutline />} label="Mis Postulaciones" />
+          <Tab icon={<Search />} label="Buscar Empleos" />
+        </Tabs>
+      </AppBar>
+      <Box className={Style.content}>{renderContent()}</Box>
     </div>
   );
 }
