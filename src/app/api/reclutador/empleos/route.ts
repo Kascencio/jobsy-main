@@ -1,108 +1,50 @@
-import { getServerSession, NextAuthOptions, Session, User } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+// Importaciones necesarias
+import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 import { prisma } from '@/lib/prisma';
-import { compare } from 'bcryptjs';
-import { JWT } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
 
-interface CustomUser extends User {
-  role: string;
-}
+// Función GET para obtener empleos
+export async function GET(request: NextRequest) {
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
-interface CustomSession extends Omit<Session, "user"> {
-  user?: CustomUser & {
-    id: string;
-  };
-}
-
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) return null;
-
-        const user = await prisma.usuario.findUnique({
-          where: { usu_email: credentials.email },
-        });
-
-        if (!user) return null;
-
-        const isValidPassword = await compare(credentials.password, user.usu_password);
-
-        if (!isValidPassword) return null;
-
-        return {
-          id: user.usu_id.toString(),
-          name: user.usu_nombre,
-          email: user.usu_email,
-          role: user.usu_rol,
-        };
-      },
-    }),
-  ],
-  callbacks: {
-    async session({ session, token }: { session: Session; token: JWT }): Promise<CustomSession> {
-      return {
-        ...session,
-        user: session.user ? {
-          ...session.user,
-          id: token.sub!,
-          role: token.role as string,
-        } : undefined
-      };
-    },
-    async jwt({ token, user }: { token: JWT; user?: CustomUser }): Promise<JWT> {
-      if (user) {
-        token.role = user.role;
-      }
-      return token;
-    },
-  },
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/login',
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-};
-
-export async function GET() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
+  if (!token) {
     return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
   }
-
-  const empleos = await prisma.empleo.findMany({
-    where: { emp_empresa_id: Number(session.user.id) },
-    include: {
-      empresa: true,
-      categoria: true,
-    },
-  });
-
-  return NextResponse.json(empleos);
-}
-
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
-  }
-
-  const data = await request.json();
 
   try {
-    const empleo = await prisma.empleo.create({
+    const empleos = await prisma.empleo.findMany({
+      where: { emp_empresa_id: Number(token.sub) },
+      include: {
+        empresa: true,
+        categoria: true,
+        empleo_habilidades: {
+          include: {
+            habilidad: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(empleos);
+  } catch (error) {
+    console.error('Error al obtener los empleos:', error);
+    return NextResponse.json({ error: 'Error al obtener los empleos' }, { status: 500 });
+  }
+}
+
+// Función POST para crear un nuevo empleo
+export async function POST(request: NextRequest) {
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+
+  if (!token) {
+    return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+  }
+
+  try {
+    const data = await request.json();
+    const habilidades = data.habilidades as number[]; // Array de IDs de habilidades
+
+    const nuevoEmpleo = await prisma.empleo.create({
       data: {
         emp_titulo: data.titulo,
         emp_descripcion: data.descripcion,
@@ -114,13 +56,25 @@ export async function POST(request: Request) {
         emp_requisitos: data.requisitos,
         emp_beneficios: data.beneficios,
         emp_num_vacantes: data.num_vacantes ? Number(data.num_vacantes) : 1,
-        emp_empresa_id: Number(session.user.id),
+        emp_empresa_id: Number(token.sub),
+        empleo_habilidades: {
+          create: habilidades.map((habId) => ({
+            habilidad: { connect: { hab_id: habId } },
+          })),
+        },
+      },
+      include: {
+        empleo_habilidades: {
+          include: {
+            habilidad: true,
+          },
+        },
       },
     });
 
-    return NextResponse.json(empleo);
+    return NextResponse.json(nuevoEmpleo);
   } catch (error) {
-    console.log(error);
+    console.error('Error al crear el empleo:', error);
     return NextResponse.json({ error: 'Error al crear el empleo' }, { status: 500 });
   }
 }

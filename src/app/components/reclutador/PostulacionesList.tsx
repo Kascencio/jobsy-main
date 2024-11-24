@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Style from '../componets.module.css';
+import Style from './Postulaciones.module.css';
+import PerfilPostulante from './PerfilPostulante';
 
 interface Usuario {
   usu_id: number;
@@ -17,6 +18,7 @@ interface Postulacion {
   pos_fecha_postulacion: string;
   pos_estado: string;
   usuario: Usuario;
+  puntaje: number;
 }
 
 interface Props {
@@ -25,6 +27,7 @@ interface Props {
 
 export default function PostulacionesList({ empId }: Props) {
   const [postulaciones, setPostulaciones] = useState<Postulacion[]>([]);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchPostulaciones = async () => {
@@ -35,7 +38,7 @@ export default function PostulacionesList({ empId }: Props) {
       } else {
         console.error('Error al obtener las postulaciones');
       }
-    };    
+    };
 
     fetchPostulaciones();
   }, [empId]);
@@ -52,33 +55,77 @@ export default function PostulacionesList({ empId }: Props) {
     if (res.ok) {
       // Actualizar el estado localmente
       setPostulaciones((prevPostulaciones) =>
-        prevPostulaciones.map((p) => (p.pos_id === posId ? { ...p, pos_estado: nuevoEstado } : p))
+        prevPostulaciones.map((p) =>
+          p.pos_id === posId ? { ...p, pos_estado: nuevoEstado } : p
+        )
       );
     } else {
       alert('Error al actualizar la postulación');
     }
   };
 
+  const verPerfil = (usuarioId: number) => {
+    setUsuarioSeleccionado(usuarioId);
+  };
+
+  const cerrarPerfil = () => {
+    setUsuarioSeleccionado(null);
+  };
+
   if (postulaciones.length === 0) {
-    return <p>No hay postulaciones para este empleo.</p>;
+    return <p className={Style.no_postulaciones}>No hay postulaciones para este empleo.</p>;
   }
 
   return (
-    <div>
-      <div className={Style.container_postulaciones}></div>
+    <div className={Style.container_postulaciones}>
       <h3 className={Style.title}>Postulaciones</h3>
       <ul className={Style.container_cards}>
         {postulaciones.map((postulacion) => (
           <li key={postulacion.pos_id} className={Style.container_card}>
             <p>
-              {postulacion.usuario.usu_nombre} {postulacion.usuario.usu_apellido} - {postulacion.usuario.usu_email}
+              {postulacion.usuario.usu_nombre} {postulacion.usuario.usu_apellido} -{' '}
+              {postulacion.usuario.usu_email}
             </p>
-            <p>Estado: {postulacion.pos_estado}</p>
-            <button onClick={() => actualizarEstado(postulacion.pos_id, 'Aceptada')}>Aceptar</button>
-            <button onClick={() => actualizarEstado(postulacion.pos_id, 'Rechazada')}>Rechazar</button>
+            <p>
+              Puntaje de Compatibilidad:{' '}
+              {typeof postulacion.puntaje === 'number' && !isNaN(postulacion.puntaje) ? (
+                <span className={Style.compatibility_score}>
+                  {postulacion.puntaje.toFixed(2)}%
+                </span>
+              ) : (
+                'N/A'
+              )}
+            </p>
+            <p>
+              Estado: <span className={Style.postulacion_estado}>{postulacion.pos_estado}</span>
+            </p>
+            <div className={Style.container_card_buttons}>
+              <button
+                className={Style.accept_button}
+                onClick={() => actualizarEstado(postulacion.pos_id, 'Aceptada')}
+              >
+                Aceptar
+              </button>
+              <button
+                className={Style.reject_button}
+                onClick={() => actualizarEstado(postulacion.pos_id, 'Rechazada')}
+              >
+                Rechazar
+              </button>
+              <button
+                className={Style.view_profile_button}
+                onClick={() => verPerfil(postulacion.usuario.usu_id)}
+              >
+                Ver Perfil
+              </button>
+            </div>
           </li>
         ))}
       </ul>
+
+      {usuarioSeleccionado && (
+        <PerfilPostulante usuarioId={usuarioSeleccionado} onClose={cerrarPerfil} />
+      )}
     </div>
   );
 }

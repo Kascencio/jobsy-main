@@ -104,6 +104,15 @@ model postulacion {
   @@index([pos_usuario_id])
 }
 
+model CV {
+  id         Int      @id @default(autoincrement())
+  filename   String
+  mimetype   String
+  content    Bytes
+  usuarioId  Int
+  usuario    usuario   @relation(fields: [usuarioId], references: [usu_id])
+}
+
 
 model usuario {
   usu_id              Int                 @id @default(autoincrement())
@@ -127,6 +136,8 @@ model usuario {
   updated_at          DateTime            @updatedAt
   accounts            Account[]
   sessions            Session[]
+  cvs                 CV[]
+   habilidades         UsuarioHabilidad[]
 
   @@index([empresa_id])
 }

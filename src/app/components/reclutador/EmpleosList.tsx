@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Style from '../componets.module.css';
+import Style from './EmpleosList.module.css';
 import PostulacionesList from './PostulacionesList';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -15,7 +15,17 @@ export interface Empleo {
   emp_fecha_publicacion: string; // o Date
   empresa?: Empresa;
   categoria?: Categoria;
+  empleo_habilidades?: EmpleoHabilidad[];
   // Otros campos según tu modelo
+}
+
+export interface Habilidad {
+  hab_id: number;
+  hab_nombre: string;
+}
+
+export interface EmpleoHabilidad {
+  habilidad: Habilidad;
 }
 
 export interface Empresa {
@@ -70,6 +80,16 @@ export default function EmpleosList({ empleos }: Props) {
           <p className={Style.p_empleo}>{empleo.emp_descripcion}</p>
           {empleo.empresa && <p className={Style.p_empresa}>Empresa: {empleo.empresa.emp_nombre}</p>}
           {empleo.categoria && <p className={Style.p_categoria}>Categoría: {empleo.categoria.cat_nombre}</p>}
+          {empleo.empleo_habilidades && empleo.empleo_habilidades.length > 0 && (
+            <div>
+              <p><strong>Habilidades requeridas:</strong></p>
+              <ul>
+                {empleo.empleo_habilidades.map((eh) => (
+                  <li key={eh.habilidad.hab_id}>{eh.habilidad.hab_nombre}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className={Style.container_buttons}>
           <button className={Style.button_empleo}
             onClick={() => {

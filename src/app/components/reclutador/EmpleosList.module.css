@@ -1,0 +1,144 @@
+/* Contenedor de la lista de empleos */
+.container_empleo_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Tarjeta individual de empleo */
+  .card_empleo_list {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card_empleo_list:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Título del empleo */
+  .title_empleo {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333333;
+    font-weight: 600;
+  }
+  
+  .title_empleo a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .title_empleo a:hover {
+    color: #1e90ff;
+  }
+  
+  /* Descripción del empleo */
+  .p_empleo {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #555555;
+    line-height: 1.6;
+  }
+  
+  /* Información de la empresa y categoría */
+  .p_empresa,
+  .p_categoria {
+    font-size: 14px;
+    color: #777777;
+    margin-bottom: 5px;
+  }
+  
+  .p_empresa::before,
+  .p_categoria::before {
+    content: "• ";
+    color: #1e90ff;
+  }
+  
+  /* Sección de habilidades */
+  .habilidades_section {
+    margin-top: 15px;
+  }
+  
+  .habilidades_section p {
+    font-weight: 500;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .habilidades_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .habilidad_item {
+    background-color: #f0f8ff;
+    color: #1e90ff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+  
+  /* Contenedor de botones */
+  .container_buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Estilos generales de los botones */
+  .button_empleo,
+  .button_empleo_delete {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Botón para ver/ocultar postulaciones */
+  .button_empleo {
+    background-color: #1e90ff;
+    color: #ffffff;
+  }
+  
+  .button_empleo:hover {
+    background-color: #1c86ee;
+  }
+  
+  /* Botón para eliminar empleo */
+  .button_empleo_delete {
+    background-color: #ff4d4f;
+    color: #ffffff;
+  }
+  
+  .button_empleo_delete:hover {
+    background-color: #e63946;
+  }
+  
+  /* Diseño responsivo */
+  @media (max-width: 768px) {
+    .card_empleo_list {
+      padding: 20px;
+    }
+  
+    .container_buttons {
+      flex-direction: column;
+    }
+  
+    .button_empleo,
+    .button_empleo_delete {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  

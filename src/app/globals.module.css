@@ -1,5 +1,9 @@
 /* src/app/global.css */
 @import url('https://fonts.cdnfonts.com/css/satoshi');
+
+
+
+
 .root{
   --font_main:"Afacad Flux", sans-serif;
   --font_title: 'Satoshi', sans-serif;

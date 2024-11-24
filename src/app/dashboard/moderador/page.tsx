@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import CategoriasList from '../../components/moderador/CategoriasList';
 import CategoriaForm from '../../components/moderador/CategoriaForm';
+import HabilidadForm from '../../components/moderador/HabilidadForm';
+import HabilidadList from '../../components/moderador/HabilidadList';
 
 export default function DashboardAdministrador() {
   const { data: session, status } = useSession();
@@ -27,6 +29,8 @@ export default function DashboardAdministrador() {
       <h1 className="text-2xl font-bold mb-6">Dashboard del Administrador</h1>
       <CategoriaForm />
       <CategoriasList />
+      <HabilidadForm />
+      <HabilidadList />
     </div>
   );
 }
