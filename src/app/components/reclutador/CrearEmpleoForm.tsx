@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Style from '../componets.module.css';
 import Select, { MultiValue } from 'react-select';
+import { Empleo } from '@/types'; // Importa desde el archivo de tipos
 
 interface Categoria {
   cat_id: number;
@@ -16,19 +17,9 @@ interface Habilidad {
   hab_nombre: string;
 }
 
-
 interface HabilidadOption {
   value: number;
   label: string;
-}
-
-
-interface Empleo {
-  titulo: string;
-  descripcion: string;
-  categoria_id: number;
-  habilidades: number[];
-  // Agrega otras propiedades según sea necesario
 }
 
 interface Props {
@@ -37,15 +28,17 @@ interface Props {
 
 export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
   const [form, setForm] = useState({
-    titulo: '',
-    descripcion: '',
-    categoria_id: '',
+    emp_titulo: '',
+    emp_descripcion: '',
+    emp_categoria_id: '',
     // Otros campos...
   });
 
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [habilidadesOptions, setHabilidadesOptions] = useState<HabilidadOption[]>([]);
-  const [habilidadesSeleccionadas, setHabilidadesSeleccionadas] = useState<MultiValue<HabilidadOption>>([]);
+  const [habilidadesSeleccionadas, setHabilidadesSeleccionadas] = useState<
+    MultiValue<HabilidadOption>
+  >([]);
 
   useEffect(() => {
     const fetchCategoriasYHabilidades = async () => {
@@ -81,10 +74,8 @@ export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Obtener los IDs de las habilidades seleccionadas
     const habilidadesIds = habilidadesSeleccionadas.map((option) => option.value);
 
-    // Enviar los datos del empleo a la API
     try {
       const res = await fetch('/api/reclutador/empleos', {
         method: 'POST',
@@ -95,15 +86,25 @@ export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
       });
 
       if (res.ok) {
-        const nuevoEmpleo = await res.json();
+        const data = await res.json();
+        const nuevoEmpleo: Empleo = {
+          emp_id: data.emp_id,
+          emp_titulo: data.emp_titulo,
+          emp_descripcion: data.emp_descripcion,
+          emp_categoria_id: data.emp_categoria_id,
+          emp_fecha_publicacion: data.emp_fecha_publicacion,
+          emp_empresa_id: data.emp_empresa_id,
+          empleo_habilidades: data.empleo_habilidades,
+          // Agrega otras propiedades si es necesario
+        };
+
         alert('Empleo creado correctamente');
-        // Agregar el nuevo empleo al estado en el componente padre
         agregarEmpleo(nuevoEmpleo);
-        // Reiniciar el formulario
+
         setForm({
-          titulo: '',
-          descripcion: '',
-          categoria_id: '',
+          emp_titulo: '',
+          emp_descripcion: '',
+          emp_categoria_id: '',
           // Otros campos...
         });
         setHabilidadesSeleccionadas([]);
@@ -125,16 +126,16 @@ export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
           holder="Título del Empleo"
           label="Título del Empleo"
           type="text"
-          name="titulo"
-          value={form.titulo}
+          name="emp_titulo"
+          value={form.emp_titulo}
           onChange={handleChange}
           required
         />
         <div className={Style.container_inputs}>
           <label className={Style.title}>Descripción</label>
           <textarea
-            name="descripcion"
-            value={form.descripcion}
+            name="emp_descripcion"
+            value={form.emp_descripcion}
             onChange={handleChange}
             className={Style.input}
             style={{ marginTop: 10 }}
@@ -145,8 +146,8 @@ export default function CrearEmpleoForm({ agregarEmpleo }: Props) {
         <div className={Style.container_inputs} style={{ marginTop: 20 }}>
           <label className={Style.title}>Categoría</label>
           <select
-            name="categoria_id"
-            value={form.categoria_id}
+            name="emp_categoria_id"
+            value={form.emp_categoria_id}
             onChange={handleChange}
             className={Style.input}
             style={{ marginTop: 10 }}
