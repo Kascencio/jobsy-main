@@ -46,16 +46,16 @@ export async function POST(request: NextRequest) {
 
     const nuevoEmpleo = await prisma.empleo.create({
       data: {
-        emp_titulo: data.titulo,
-        emp_descripcion: data.descripcion,
-        emp_categoria_id: Number(data.categoria_id),
+        emp_titulo: data.emp_titulo, // Cambiado de data.titulo a data.emp_titulo
+        emp_descripcion: data.emp_descripcion, // Cambiado de data.descripcion a data.emp_descripcion
+        emp_categoria_id: Number(data.emp_categoria_id), // Cambiado de data.categoria_id a data.emp_categoria_id
         emp_fecha_publicacion: new Date(),
-        emp_salario_min: data.salario_min ? Number(data.salario_min) : null,
-        emp_salario_max: data.salario_max ? Number(data.salario_max) : null,
-        emp_tipo_contrato: data.tipo_contrato,
-        emp_requisitos: data.requisitos,
-        emp_beneficios: data.beneficios,
-        emp_num_vacantes: data.num_vacantes ? Number(data.num_vacantes) : 1,
+        emp_salario_min: data.emp_salario_min ? Number(data.emp_salario_min) : null,
+        emp_salario_max: data.emp_salario_max ? Number(data.emp_salario_max) : null,
+        emp_tipo_contrato: data.emp_tipo_contrato,
+        emp_requisitos: data.emp_requisitos,
+        emp_beneficios: data.emp_beneficios,
+        emp_num_vacantes: data.emp_num_vacantes ? Number(data.emp_num_vacantes) : 1,
         emp_empresa_id: Number(token.sub),
         empleo_habilidades: {
           create: habilidades.map((habId) => ({
