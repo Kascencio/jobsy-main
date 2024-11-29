@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Button from '../../components/Button';
+import styles from './CategoriasList.module.css';
 
 interface Categoria {
   cat_id: number;
@@ -12,7 +13,6 @@ export default function CategoriasList() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   useEffect(() => {
-    // Obtener las categorías desde la API
     const fetchData = async () => {
       const res = await fetch('/api/moderador/categorias');
       const data: Categoria[] = await res.json();
@@ -36,13 +36,17 @@ export default function CategoriasList() {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Categorías Existentes</h2>
-      <ul>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Categorías Existentes</h2>
+      <ul className={styles.list}>
         {categorias.map((categoria) => (
-          <li key={categoria.cat_id} className="mb-2 flex justify-between items-center">
-            <span>{categoria.cat_nombre}</span>
-            <Button label="Eliminar" onClick={() => handleDelete(categoria.cat_id)} />
+          <li key={categoria.cat_id} className={styles.listItem}>
+            <span className={styles.categoryName}>{categoria.cat_nombre}</span>
+            <Button
+              label="Eliminar"
+              onClick={() => handleDelete(categoria.cat_id)}
+              className={styles.deleteButton}
+            />
           </li>
         ))}
       </ul>

@@ -1,30 +1,23 @@
-// src/app/ofertas/page.tsx
+import Link from 'next/link';
+import styles from './OfertaCard.module.css';
 
-import OfertaCard from '../components/OfertaCard';
-import { prisma } from '@/lib/prisma';
-import Style from '../components/componets.module.css'
+interface OfertaCardProps {
+  id: number;
+  titulo: string;
+  empresa: string;
+  fechaPublicacion: string;
+}
 
-export default async function Ofertas() {
-  const empleos = await prisma.empleo.findMany({
-    include: {
-      empresa: true,
-    },
-    orderBy: {
-      emp_fecha_publicacion: 'desc',
-    },
-  });
-
+export default function OfertaCard({ id, titulo, empresa, fechaPublicacion }: OfertaCardProps) {
   return (
-    <div className={Style.container_cards}>
-    {empleos.map((empleo) => (
-      <OfertaCard
-        key={empleo.emp_id}
-        id={empleo.emp_id}
-        titulo={empleo.emp_titulo}
-        empresa={empleo.empresa.emp_nombre}
-        fechaPublicacion={empleo.emp_fecha_publicacion.toISOString()}
-      />
-    ))}
-  </div>
+    <div className={styles.card}>
+      <h2 className={styles.title}>
+        <Link href={`/ofertas/${id}`}>{titulo}</Link>
+      </h2>
+      <p className={styles.empresa}>{empresa}</p>
+      <p className={styles.fecha}>
+        Publicado el {new Date(fechaPublicacion).toLocaleDateString()}
+      </p>
+    </div>
   );
 }

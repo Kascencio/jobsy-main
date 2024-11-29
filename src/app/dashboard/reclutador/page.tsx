@@ -7,7 +7,7 @@ import EmpresaForm from '../../components/reclutador/EmpresaForm';
 import CrearEmpleoForm from '../../components/reclutador/CrearEmpleoForm';
 import EmpleosList from '../../components/reclutador/EmpleosList';
 import Style from './reclutador.module.css';
-import { Empleo } from '@/types'; // Importa desde el nuevo archivo
+import { Empleo } from '@/types'; // Adjust the import path as necessary
 
 export default function DashboardReclutador() {
   const { data: session, status } = useSession();

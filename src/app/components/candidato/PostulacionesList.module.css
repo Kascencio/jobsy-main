@@ -1,0 +1,75 @@
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+  }
+  
+  /* Título */
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #2c3e50;
+  }
+  
+  /* Lista */
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Elemento de la lista */
+  .listItem {
+    border: 1px solid #ecf0f1;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+  }
+  
+  /* Título del empleo */
+  .empleoTitulo {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2980b9;
+  }
+  
+  .empleoTitulo a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .empleoTitulo a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Empresa del empleo */
+  .empleoEmpresa {
+    font-size: 18px;
+    color: #34495e;
+    margin-bottom: 10px;
+  }
+  
+  /* Estado de la postulación */
+  .postulacionEstado {
+    font-size: 16px;
+    color: #7f8c8d;
+  }
+  
+  .postulacionEstado span {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  /* Mensaje cuando no hay postulaciones */
+  .noPostulaciones {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d;
+    margin-top: 50px;
+  }
+  

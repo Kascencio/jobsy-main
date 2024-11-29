@@ -1,3 +1,5 @@
+import { EmpleoHabilidad } from "./app/components/reclutador/EmpleosList";
+
 // Definición de la interfaz Empresa
 export interface Empresa {
     emp_id: number;
@@ -17,13 +19,11 @@ export interface Empresa {
   export interface Empleo {
     emp_id: number;
     emp_titulo: string;
-    emp_descripcion?: string;
-    emp_empresa_id: number;
+    emp_descripcion: string;
     emp_categoria_id: number;
-    emp_fecha_publicacion: string; // o Date
-    empresa?: Empresa;
-    categoria?: Categoria;
-    // Otros campos según tu modelo
+    emp_fecha_publicacion: string;
+    emp_empresa_id: number;
+    empleo_habilidades: EmpleoHabilidad[]; // Check this definition
   }
   
   // Puedes definir otras interfaces aquí si las necesitas
