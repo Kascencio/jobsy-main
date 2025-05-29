@@ -1,55 +1,102 @@
-'use client';
+"use client"
 
-import { useState, useEffect } from 'react';
-import Button from '../../components/Button';
-import styles from './CategoriasList.module.css';
+import { useState, useEffect } from "react"
+import { Trash2, Tag } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface Categoria {
-  cat_id: number;
-  cat_nombre: string;
+  cat_id: number
+  cat_nombre: string
 }
 
 export default function CategoriasList() {
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('/api/moderador/categorias');
-      const data: Categoria[] = await res.json();
-      setCategorias(data);
-    };
+      try {
+        const res = await fetch("/api/moderador/categorias")
+        const data: Categoria[] = await res.json()
+        setCategorias(data)
+      } catch (error) {
+        console.error("Error al obtener categorías:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const handleDelete = async (id: number) => {
-    const res = await fetch(`/api/moderador/categorias/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (res.ok) {
-      alert('Categoría eliminada');
-      setCategorias(categorias.filter((categoria) => categoria.cat_id !== id));
-    } else {
-      alert('Error al eliminar la categoría');
+    if (!confirm("¿Estás seguro de que deseas eliminar esta categoría?")) {
+      return
     }
-  };
+
+    try {
+      const res = await fetch(`/api/moderador/categorias/${id}`, {
+        method: "DELETE",
+      })
+
+      if (res.ok) {
+        setMessage({ type: "success", text: "Categoría eliminada correctamente" })
+        setCategorias(categorias.filter((categoria) => categoria.cat_id !== id))
+      } else {
+        setMessage({ type: "error", text: "Error al eliminar la categoría" })
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: "Error de conexión" })
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-4">
+        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+        <p className="text-sm text-gray-600">Cargando categorías...</p>
+      </div>
+    )
+  }
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Categorías Existentes</h2>
-      <ul className={styles.list}>
-        {categorias.map((categoria) => (
-          <li key={categoria.cat_id} className={styles.listItem}>
-            <span className={styles.categoryName}>{categoria.cat_nombre}</span>
-            <Button
-              label="Eliminar"
-              onClick={() => handleDelete(categoria.cat_id)}
-              className={styles.deleteButton}
-            />
-          </li>
-        ))}
-      </ul>
+    <div className="space-y-4">
+      {message && (
+        <Alert variant={message.type === "error" ? "destructive" : "default"}>
+          <AlertDescription>{message.text}</AlertDescription>
+        </Alert>
+      )}
+
+      {categorias.length === 0 ? (
+        <div className="text-center py-8">
+          <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <Tag className="h-6 w-6 text-gray-400" />
+          </div>
+          <p className="text-gray-600">No hay categorías creadas</p>
+        </div>
+      ) : (
+        <div className="space-y-2 max-h-64 overflow-y-auto">
+          {categorias.map((categoria) => (
+            <div key={categoria.cat_id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Tag className="h-4 w-4 text-blue-600" />
+                <Badge variant="secondary">{categoria.cat_nombre}</Badge>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDelete(categoria.cat_id)}
+                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  );
+  )
 }

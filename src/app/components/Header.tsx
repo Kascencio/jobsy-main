@@ -1,69 +1,273 @@
-// src/components/Header.tsx
+"use client"
 
-"use client";
-
-import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import Style from "./componets.module.css";
+import { useState } from "react"
+import Link from "next/link"
+import { useSession, signOut } from "next-auth/react"
+import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Briefcase, User, Building2, LogOut, Menu, X, Search, Bell, Home, Shield } from "lucide-react"
+import Image from "next/image"
 
 export default function Header() {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
+  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case "candidato":
+        return "bg-blue-100 text-blue-800"
+      case "reclutador":
+        return "bg-green-100 text-green-800"
+      case "moderador":
+        return "bg-purple-100 text-purple-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
+  const getRoleLabel = (role: string) => {
+    switch (role) {
+      case "candidato":
+        return "Candidato"
+      case "reclutador":
+        return "Reclutador"
+      case "moderador":
+        return "Moderador"
+      default:
+        return "Usuario"
+    }
+  }
+
+  // Actualizar las rutas de navegación para todos los roles
+  const getNavigationItems = (role: string) => {
+    switch (role) {
+      case "candidato":
+        return [
+          { href: "/", label: "Inicio", icon: Home },
+          { href: "/buscar-empleos", label: "Buscar Empleos", icon: Search },
+          { href: "/dashboard/candidato", label: "Mi Dashboard", icon: User },
+        ]
+      case "reclutador":
+        return [
+          { href: "/", label: "Inicio", icon: Home },
+          { href: "/dashboard/reclutador", label: "Panel Reclutador", icon: Building2 },
+          { href: "/buscar-empleos", label: "Buscar Empleos", icon: Search },
+        ]
+      case "moderador":
+        return [
+          { href: "/", label: "Inicio", icon: Home },
+          { href: "/dashboard/moderador", label: "Panel Admin", icon: Shield },
+          { href: "/buscar-empleos", label: "Buscar Empleos", icon: Search },
+        ]
+      default:
+        return [
+          { href: "/", label: "Inicio", icon: Home },
+          { href: "/buscar-empleos", label: "Empleos", icon: Search },
+        ]
+    }
+  }
+
+  // Actualizar los enlaces del dropdown para todos los roles
+  const getDropdownItems = (role: string) => {
+    const baseItems = [{ href: "/perfil", label: "Mi Perfil", icon: User }]
+
+    switch (role) {
+      case "candidato":
+        return [
+          ...baseItems,
+          { href: "/dashboard/candidato", label: "Dashboard", icon: User },
+          { href: "/buscar-empleos", label: "Buscar Empleos", icon: Search },
+        ]
+      case "reclutador":
+        return [
+          ...baseItems,
+          { href: "/dashboard/reclutador", label: "Panel Reclutador", icon: Building2 },
+          { href: "/dashboard/reclutador", label: "Mis Ofertas", icon: Briefcase },
+        ]
+      case "moderador":
+        return [
+          ...baseItems,
+          { href: "/dashboard/moderador", label: "Panel Admin", icon: Shield },
+          { href: "/buscar-empleos", label: "Buscar Empleos", icon: Search },
+        ]
+      default:
+        return baseItems
+    }
+  }
+
+  const navigationItems = session?.user?.role ? getNavigationItems(session.user.role) : getNavigationItems("")
+  const dropdownItems = session?.user?.role ? getDropdownItems(session.user.role) : getDropdownItems("")
+
+  // No mostrar navegación completa en páginas de auth
+  const isAuthPage = pathname?.includes("/login") || pathname?.includes("/registro")
+  const isDashboardPage = pathname?.includes("/dashboard")
 
   return (
-    <header className={Style.header}>
-      <div className={Style.img_container}>
-        <Link href="/">
-          <svg
-            width="40"
-            height="36"
-            viewBox="0 0 29 30"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.00683594 13.3442H1.41843C2.21503 6.87801 7.73145 1.8831 14.413 1.8831C20.2356 1.8831 25.324 5.71296 26.9768 11.2606C27.1922 11.9352 27.3142 12.641 27.3764 13.3442H28.8165C27.9888 6.11256 21.8599 0.502686 14.413 0.502686C6.96599 0.502686 0.837162 6.10996 0.00943323 13.3442H0.00683594Z"
-              fill="black"
-            />
-            <path
-              d="M27.0374 16.6559C26.0877 20.0888 23.1764 22.6628 19.0066 22.0193C17.045 21.7131 15.4518 20.5169 14.746 19.0145C14.624 19.0145 14.5332 19.0457 14.4087 19.0457C12.6935 19.0457 11.2534 17.974 10.6696 16.4717C9.90417 17.5148 9.47344 18.8615 9.56685 20.6389C9.8419 25.6961 18.3942 28.2389 24.2765 23.6436C24.0923 23.8564 23.8769 24.0717 23.6927 24.256C21.3029 26.6457 18.0232 28.117 14.4061 28.117C7.72461 28.117 2.20813 23.1221 1.41153 16.6559H0C0.827729 23.8901 6.95656 29.4974 14.4035 29.4974C18.4176 29.4974 22.0347 27.8731 24.6709 25.2679C26.9076 23.0001 28.4411 19.9954 28.8096 16.6559H27.0322H27.0374Z"
-              fill="black"
-            />
-            <path
-              d="M24.1573 16.4399C25.8128 14.2629 25.2601 11.2296 23.9134 9.02403C22.3202 6.32808 18.672 4.27302 15.2703 4.18221C1.72301 3.78261 1.72303 22.1717 7.70136 16.7175C8.71332 15.799 9.54102 15.0932 10.3999 14.5742C10.6153 12.5503 12.3304 10.9571 14.414 10.9571C16.6507 10.9571 18.4592 12.7657 18.4592 15.0024C18.4592 15.677 18.275 16.3205 18 16.8706C19.562 18.4352 22.5641 18.5572 24.1599 16.4425L24.1573 16.4399Z"
-              fill="black"
-            />
-          </svg>
-        </Link>
-        <h1>Jobsy</h1>
-      </div>
-      <nav>
-        {session ? (
-          <>
-          <ul>
-            <li>
-            <Link href="/dashboard">
-              <span>Herramientas</span>
-            </Link>
-            </li>
-          </ul> 
-            <Link href="/perfil">
-              <span className="mr-4">Perfil</span>
-            </Link>
-            <a onClick={() => signOut()}>
-              Cerrar Sesión
-            </a>
-          </>
-        ) : (
-          <>
-            <Link href="/login">
-              <span className="mr-4">Iniciar Sesión</span>
-            </Link>
-            <Link href="/registro">
-              <span>Registrarse</span>
-            </Link>
-          </>
+    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+          <Image src="/images/logo-j.png" alt="Job Card" width={54} height={20} max-widht={2000} className="rounded-lg" />
+            <span className="text-xl font-bold text-gray-900">Jobsy</span>
+          </Link>
+
+          {/* Desktop Navigation - Solo si no es página de auth */}
+          {!isAuthPage && (
+            <nav className="hidden md:flex items-center space-x-6">
+              {navigationItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActive ? "bg-blue-100 text-blue-700" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    }`}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+            </nav>
+          )}
+
+          {/* Right side actions */}
+          <div className="flex items-center space-x-4">
+            {session ? (
+              <>
+                {/* Notifications - Solo en dashboard */}
+                {isDashboardPage && (
+                  <Button variant="ghost" size="icon" className="relative">
+                    <Bell className="h-5 w-5" />
+                    <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                  </Button>
+                )}
+
+                {/* User menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src="/placeholder.svg?height=40&width=40" alt="Usuario" />
+                        <AvatarFallback>
+                          {session.user?.name
+                            ?.split(" ")
+                            .map((n) => n[0])
+                            .join("") || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{session.user?.name || "Usuario"}</p>
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">{session.user?.email}</p>
+                        {session.user?.role && (
+                          <Badge className={`w-fit text-xs ${getRoleColor(session.user.role)}`}>
+                            {getRoleLabel(session.user.role)}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+
+                    {/* Enlaces específicos por rol */}
+                    {dropdownItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <item.icon className="mr-2 h-4 w-4" />
+                          {item.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => signOut()}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Cerrar Sesión
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild className="hidden md:inline-flex">
+                  <Link href="/login">Iniciar Sesión</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900"
+                >
+                  <Link href="/registro">Registrarse</Link>
+                </Button>
+              </>
+            )}
+
+            {/* Mobile menu button - Solo si no es página de auth */}
+            {!isAuthPage && (
+              <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Navigation - Solo si no es página de auth */}
+        {!isAuthPage && isMenuOpen && (
+          <div className="md:hidden border-t py-3">
+            <nav className="flex flex-col space-y-1">
+              {navigationItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md transition-colors ${
+                      isActive ? "bg-blue-100 text-blue-700" : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+
+              {!session && (
+                <>
+                  <Link
+                    href="/login"
+                    className="px-2 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Iniciar Sesión
+                  </Link>
+                  <Link
+                    href="/registro"
+                    className="px-2 py-2 text-sm font-medium text-blue-600 hover:text-blue-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Registrarse
+                  </Link>
+                </>
+              )}
+            </nav>
+          </div>
         )}
-      </nav>
+      </div>
     </header>
-  );
+  )
 }

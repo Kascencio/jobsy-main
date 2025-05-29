@@ -26,5 +26,20 @@ export interface Empresa {
     empleo_habilidades: EmpleoHabilidad[]; // Check this definition
   }
   
-  // Puedes definir otras interfaces aquí si las necesitas
-  
+
+
+export interface Habilidad {
+  hab_id: number
+  hab_nombre: string
+}
+
+export interface Empresa {
+  emp_id: number
+  emp_nombre: string
+  emp_sector: string
+}
+
+export interface Categoria {
+  cat_id: number
+  cat_nombre: string
+}
