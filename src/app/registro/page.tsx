@@ -68,6 +68,7 @@ export default function Registro() {
         setError(errorData.message || "Error al registrar la cuenta")
       }
     } catch (error) {
+      console.error(error)
       setError("Error de conexión. Por favor, intenta de nuevo.")
     } finally {
       setIsLoading(false)

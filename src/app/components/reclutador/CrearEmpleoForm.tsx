@@ -23,10 +23,6 @@ interface Habilidad {
   hab_nombre: string
 }
 
-interface HabilidadOption {
-  value: number
-  label: string
-}
 
 interface Props {
   agregarEmpleo: (empleo: Empleo) => void

@@ -13,10 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-interface HabilidadOption {
-  value: number
-  label: string
-}
+
 
 interface Habilidad {
   hab_id: number

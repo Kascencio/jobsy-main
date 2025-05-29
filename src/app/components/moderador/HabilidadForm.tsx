@@ -35,6 +35,7 @@ export default function HabilidadForm() {
         setMessage({ type: "error", text: "Error al crear la habilidad" })
       }
     } catch (error) {
+      console.error(error)
       setMessage({ type: "error", text: "Error de conexión" })
     } finally {
       setIsLoading(false)

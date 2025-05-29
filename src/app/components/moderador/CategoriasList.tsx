@@ -49,6 +49,7 @@ export default function CategoriasList() {
         setMessage({ type: "error", text: "Error al eliminar la categoría" })
       }
     } catch (error) {
+      console.error("Error al eliminar la categoría:", error)
       setMessage({ type: "error", text: "Error de conexión" })
     }
   }

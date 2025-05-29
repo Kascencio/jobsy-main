@@ -83,7 +83,7 @@ export default async function Perfil() {
                   <CardDescription className="text-lg mb-3">{user?.usu_email}</CardDescription>
                   <Badge className={`${getRoleColor(user?.usu_rol || "")} text-sm`}>
                     <span className="mr-1">{getRoleIcon(user?.usu_rol || "")}</span>
-                    {user?.usu_rol?.charAt(0).toUpperCase() + user?.usu_rol?.slice(1)}
+                    {user?.usu_rol ? user.usu_rol.charAt(0).toUpperCase() + user.usu_rol.slice(1) : ""}
                   </Badge>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default async function Perfil() {
                   <div className="flex items-center gap-2 mt-1">
                     <Shield className="h-4 w-4 text-gray-400" />
                     <Badge className={`${getRoleColor(user?.usu_rol || "")} text-xs`}>
-                      {user?.usu_rol?.charAt(0).toUpperCase() + user?.usu_rol?.slice(1)}
+                      {user?.usu_rol ? user.usu_rol.charAt(0).toUpperCase() + user.usu_rol.slice(1) : ""}
                     </Badge>
                   </div>
                 </div>

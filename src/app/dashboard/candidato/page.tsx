@@ -60,18 +60,6 @@ export default function DashboardCandidato() {
     },
   ]
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case "perfil":
-        return <PerfilForm />
-      case "postulaciones":
-        return <PostulacionesList />
-      case "buscarEmpleos":
-        return <BuscarEmpleos />
-      default:
-        return null
-    }
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">

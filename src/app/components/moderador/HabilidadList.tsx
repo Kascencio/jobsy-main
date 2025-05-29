@@ -51,6 +51,7 @@ export default function HabilidadList() {
         setMessage({ type: "error", text: "Error al eliminar la habilidad" })
       }
     } catch (error) {
+      console.error("Error al eliminar la habilidad:", error)
       setMessage({ type: "error", text: "Error de conexión" })
     }
   }

@@ -35,6 +35,7 @@ export default function CategoriaForm() {
         setMessage({ type: "error", text: "Error al crear la categoría" })
       }
     } catch (error) {
+      console.error("Error al crear la categoría:", error)
       setMessage({ type: "error", text: "Error de conexión" })
     } finally {
       setIsLoading(false)

@@ -73,6 +73,7 @@ interface Empleo {
 export default function BuscarEmpleosPage() {
   const { data: session, status } = useSession()
 
+  console.log("Session data:", status, session)
   // Estados principales
   const [empleos, setEmpleos] = useState<Empleo[]>([])
   const [empleosFiltrados, setEmpleosFiltrados] = useState<Empleo[]>([])
@@ -93,6 +94,7 @@ export default function BuscarEmpleosPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([])
   const [habilidades, setHabilidades] = useState<Habilidad[]>([])
 
+  console.log("Empleos data:", habilidades)
   // Cargar datos iniciales
   useEffect(() => {
     const fetchData = async () => {
@@ -293,7 +295,7 @@ export default function BuscarEmpleosPage() {
           </SelectContent>
         </Select>
         <div className="flex items-center space-x-2 mt-3">
-          <Checkbox id="remote-only" checked={showRemoteOnly} onCheckedChange={setShowRemoteOnly} />
+          <Checkbox id="remote-only" checked={showRemoteOnly} onCheckedChange={(value) => setShowRemoteOnly(value === true)} />
           <Label htmlFor="remote-only" className="text-sm">
             Solo trabajos remotos
           </Label>

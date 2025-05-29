@@ -64,6 +64,7 @@ export default function EmpresaForm() {
         setMessage({ type: "error", text: "Error al actualizar los datos de la empresa" })
       }
     } catch (error) {
+      console.error("Error al actualizar los datos de la empresa:", error)
       setMessage({ type: "error", text: "Error de conexión" })
     } finally {
       setIsLoading(false)
