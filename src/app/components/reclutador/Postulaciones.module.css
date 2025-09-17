@@ -1,0 +1,127 @@
+/* components.module.css */
+
+/* Contenedor principal de las postulaciones */
+.container_postulaciones {
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+  }
+  
+  /* Estilo del título */
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+  }
+  
+  /* Contenedor de las tarjetas */
+  .container_cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Tarjeta individual */
+  .container_card {
+    background-color: #ffffff;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Texto dentro de la tarjeta */
+  .container_card p {
+    margin: 10px 0;
+    color: #34495e;
+    line-height: 1.5;
+  }
+  
+  /* Puntaje de compatibilidad */
+  .compatibility_score {
+    font-weight: bold;
+    color: #27ae60;
+  }
+  
+  /* Estado de la postulación */
+  .postulacion_estado {
+    font-weight: bold;
+    color: #2980b9;
+  }
+  
+  /* Contenedor de botones */
+  .container_card_buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  /* Estilo general de los botones */
+  .container_card button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Botón de aceptar */
+  .accept_button {
+    background-color: #2ecc71;
+  }
+  
+  .accept_button:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Botón de rechazar */
+  .reject_button {
+    background-color: #e74c3c;
+  }
+  
+  .reject_button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Botón de ver perfil */
+  .view_profile_button {
+    background-color: #3498db;
+  }
+  
+  .view_profile_button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Mensaje cuando no hay postulaciones */
+  .no_postulaciones {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d;
+  }
+  
+  /* Ajustes responsivos */
+  @media (max-width: 768px) {
+    .container_card {
+      width: 100%;
+    }
+  
+    .container_card_buttons {
+      flex-direction: column;
+    }
+  
+    .container_card button {
+      margin: 5px 0;
+    }
+  }
+  
